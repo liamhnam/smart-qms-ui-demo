@@ -41,7 +41,7 @@ export default function DemoControlBar() {
     {
       href: '/dashboard',
       label: 'Tổng quan Điều hành',
-      badge: `${kpis.completedToday} hoàn thành`,
+      badge: `${kpis.completedToday} hoàn tất`,
       icon: LayoutDashboard,
     },
     {
@@ -89,44 +89,42 @@ export default function DemoControlBar() {
   };
 
   return (
-    <div className="fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl">
+    <header className="fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-6xl">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="absolute top-16 left-1/2 -translate-x-1/2 px-5 py-2.5 bg-[#141413] text-[#F3F0EE] text-xs sm:text-sm font-medium rounded-full shadow-2xl border border-white/10 animate-bounce flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#bb302a] animate-ping" />
+        <div className="absolute top-16 left-1/2 -translate-x-1/2 px-5 py-2.5 bg-[#141413] text-[#F3F0EE] text-sm font-medium rounded-full shadow-2xl border border-white/10 animate-bounce flex items-center gap-2.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#bb302a] animate-ping" />
           {toastMessage}
         </div>
       )}
 
-      {/* Floating White Pill Container (Radius 999px / Shadow 0px 4px 24px) */}
-      <div className="bg-white/95 text-[#141413] backdrop-blur-xl border border-[#141413]/10 rounded-full shadow-[0px_4px_24px_rgba(0,0,0,0.06)] px-3 py-2 transition-all duration-300">
-        <div className="flex items-center justify-between gap-2">
+      {/* Floating White Pill Container (Radius 999px) */}
+      <div className="bg-white/95 text-[#141413] backdrop-blur-xl border border-[#141413]/10 rounded-full shadow-[0px_4px_24px_rgba(0,0,0,0.08)] px-4 py-2.5 transition-all duration-300">
+        <div className="flex items-center justify-between gap-3">
           {/* Dual-Circle Brand Mark (#bb302a + #F79E1B) */}
-          <Link href="/dashboard" className="flex items-center gap-3 pl-2 group">
-            <div className="relative flex items-center h-8">
-              {/* Left Circle: Administrative Red #bb302a */}
-              <div className="w-6 h-6 rounded-full bg-[#bb302a] opacity-95 transition-transform group-hover:scale-105" />
-              {/* Right Circle: National Gold #F79E1B */}
-              <div className="w-6 h-6 rounded-full bg-[#F79E1B] opacity-90 -ml-3.5 mix-blend-multiply transition-transform group-hover:scale-105" />
+          <Link href="/dashboard" className="flex items-center gap-3 pl-1 group flex-shrink-0">
+            <div className="relative flex items-center h-9">
+              <div className="w-7 h-7 rounded-full bg-[#bb302a] opacity-95 transition-transform group-hover:scale-105" />
+              <div className="w-7 h-7 rounded-full bg-[#F79E1B] opacity-90 -ml-4 mix-blend-multiply transition-transform group-hover:scale-105" />
             </div>
             <div className="hidden lg:block">
-              <div className="text-xs font-bold tracking-tight text-[#141413] flex items-center gap-1.5">
+              <div className="text-sm font-bold tracking-tight text-[#141413] flex items-center gap-1.5">
                 <span>Smart QMS</span>
-                <span className="px-2 py-0.5 text-[9px] font-bold tracking-widest bg-[#bb302a]/10 text-[#bb302a] rounded-full uppercase">
+                <span className="px-2 py-0.5 text-[10px] font-bold tracking-wider bg-[#bb302a]/10 text-[#bb302a] rounded-full uppercase">
                   Hành chính công
                 </span>
               </div>
-              <div className="text-[10px] text-[#696969] flex items-center gap-1.5 font-medium">
-                <span>Chờ: <strong className="text-[#141413] font-semibold">{kpis.currentlyWaiting}</strong></span>
+              <div className="text-xs text-[#555555] flex items-center gap-1.5 font-medium">
+                <span>Chờ: <strong className="text-[#141413] font-bold">{kpis.currentlyWaiting}</strong></span>
                 <span>•</span>
-                <span>Đang gọi: <strong className="text-[#bb302a] font-semibold">{kpis.currentlyServing}</strong></span>
+                <span>Đang gọi: <strong className="text-[#bb302a] font-bold">{kpis.currentlyServing}</strong></span>
               </div>
             </div>
           </Link>
 
-          {/* Navigation Links (Pill shapes with 20px radius / Ink Black active) */}
+          {/* Navigation Links */}
           {!isMinimized && (
-            <div className="flex items-center gap-1 overflow-x-auto py-0.5 scrollbar-none">
+            <nav className="flex items-center gap-1.5 overflow-x-auto py-0.5 scrollbar-none">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = pathname === item.href || (item.href === '/dashboard' && pathname === '/');
@@ -134,20 +132,20 @@ export default function DemoControlBar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-[20px] text-xs transition-all duration-200 whitespace-nowrap ${
+                    className={`flex items-center gap-2 px-3.5 py-2 rounded-[20px] text-xs sm:text-sm transition-all duration-200 whitespace-nowrap ${
                       isActive
-                        ? 'bg-[#141413] text-[#F3F0EE] font-medium shadow-sm'
-                        : 'text-[#555555] hover:text-[#141413] hover:bg-[#F3F0EE]'
+                        ? 'bg-[#141413] text-[#F3F0EE] font-semibold shadow-sm'
+                        : 'text-[#444444] hover:text-[#141413] hover:bg-[#F3F0EE] font-medium'
                     }`}
                   >
-                    <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#F79E1B]' : 'text-[#696969]'}`} />
-                    <span className="hidden sm:inline font-medium tracking-tight">{item.label}</span>
-                    <span className="sm:hidden font-medium">{item.label.split(' ')[0]}</span>
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-[#F79E1B]' : 'text-[#696969]'}`} />
+                    <span className="hidden sm:inline tracking-tight">{item.label}</span>
+                    <span className="sm:hidden">{item.label.split(' ')[0]}</span>
                     <span
-                      className={`text-[9px] px-1.5 py-0.2 rounded-full hidden md:inline-block ${
+                      className={`text-[10px] sm:text-xs px-2 py-0.5 rounded-full hidden md:inline-block font-medium ${
                         isActive
                           ? 'bg-white/20 text-[#F3F0EE]'
-                          : 'bg-[#F3F0EE] text-[#696969]'
+                          : 'bg-[#F3F0EE] text-[#555555]'
                       }`}
                     >
                       {item.badge}
@@ -155,18 +153,18 @@ export default function DemoControlBar() {
                   </Link>
                 );
               })}
-            </div>
+            </nav>
           )}
 
-          {/* Controls: Sound, Add Mock Citizen, Reset, Minimize */}
-          <div className="flex items-center gap-1.5 pr-1">
+          {/* Controls: Add Random, Sound, Reset, Minimize */}
+          <div className="flex items-center gap-2 pr-1 flex-shrink-0">
             {/* Add Random Citizen Button */}
             <button
               onClick={handleAddRandomCitizen}
               title="Mô phỏng 1 công dân đến lấy số mới"
-              className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-[#bb302a] hover:bg-[#a62a25] text-white rounded-[20px] transition-all shadow-sm"
+              className="flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold bg-[#bb302a] hover:bg-[#a62a25] text-white rounded-[20px] transition-all shadow-sm"
             >
-              <UserPlus className="w-3.5 h-3.5" />
+              <UserPlus className="w-4 h-4" />
               <span className="hidden xl:inline">+ Thêm khách</span>
             </button>
 
@@ -174,16 +172,16 @@ export default function DemoControlBar() {
             <button
               onClick={() => setIsSoundEnabled(!isSoundEnabled)}
               title={isSoundEnabled ? 'Tắt âm thanh chuông gọi số' : 'Bật chuông gọi số Ding-dong'}
-              className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-[20px] text-xs font-medium border transition-all flex items-center gap-1.5 ${
+              className={`p-2 sm:px-3 sm:py-2 rounded-[20px] text-xs sm:text-sm font-medium border transition-all flex items-center gap-1.5 ${
                 isSoundEnabled
                   ? 'bg-white border-[#141413]/20 text-[#141413]'
                   : 'bg-[#F3F0EE] border-transparent text-[#696969]'
               }`}
             >
               {isSoundEnabled ? (
-                <Volume2 className="w-3.5 h-3.5 text-[#bb302a]" />
+                <Volume2 className="w-4 h-4 text-[#bb302a]" />
               ) : (
-                <VolumeX className="w-3.5 h-3.5 text-[#696969]" />
+                <VolumeX className="w-4 h-4 text-[#696969]" />
               )}
               <span className="hidden 2xl:inline">{isSoundEnabled ? 'Chuông: Bật' : 'Tắt'}</span>
             </button>
@@ -191,10 +189,10 @@ export default function DemoControlBar() {
             {/* Reset Button */}
             <button
               onClick={handleReset}
-              title="Khôi phục trạng thái demo ban đầu"
+              title="Khôi phục dữ liệu demo ban đầu"
               className="p-2 text-[#696969] hover:text-[#141413] hover:bg-[#F3F0EE] rounded-full transition-all"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
+              <RotateCcw className="w-4 h-4" />
             </button>
 
             {/* Minimize Toggle */}
@@ -204,14 +202,14 @@ export default function DemoControlBar() {
               className="p-2 text-[#696969] hover:text-[#141413] hover:bg-[#F3F0EE] rounded-full transition-all"
             >
               {isMinimized ? (
-                <ChevronDown className="w-3.5 h-3.5" />
+                <ChevronDown className="w-4 h-4" />
               ) : (
-                <ChevronUp className="w-3.5 h-3.5" />
+                <ChevronUp className="w-4 h-4" />
               )}
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 }

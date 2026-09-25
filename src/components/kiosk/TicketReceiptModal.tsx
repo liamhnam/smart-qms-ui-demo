@@ -30,47 +30,47 @@ export default function TicketReceiptModal({ ticket, onClose }: TicketReceiptMod
             <div className="w-5 h-5 rounded-full bg-[#F79E1B] opacity-90 -ml-2.5 mix-blend-screen" />
           </div>
 
-          <h3 className="font-medium text-base tracking-tight uppercase">PHIẾU LẤY SỐ THỨ TỰ</h3>
-          <p className="text-xs text-white/80 mt-0.5">Trung tâm Phục vụ Hành chính công</p>
+          <h3 className="font-bold text-base sm:text-lg tracking-tight uppercase">PHIẾU LẤY SỐ THỨ TỰ</h3>
+          <p className="text-xs sm:text-sm text-white/90 mt-0.5 font-medium">Trung tâm Phục vụ Hành chính công</p>
         </div>
 
         {/* Receipt Content Body */}
         <div className="p-7 text-center space-y-5 bg-[#FCFBFA]">
           <div className="border-b border-dashed border-[#141413]/15 pb-5">
-            <div className="text-xs font-bold text-[#696969] tracking-wider uppercase">
+            <div className="text-xs sm:text-sm font-bold text-[#696969] tracking-wider uppercase">
               • {ticket.categoryName}
             </div>
             {ticket.citizen.isPriority && (
-              <div className="mt-1.5 inline-block px-3 py-1 bg-[#F79E1B]/15 text-[#9A3A0A] text-[11px] font-bold rounded-full">
+              <div className="mt-2 inline-block px-3.5 py-1 bg-[#F79E1B]/20 text-[#9A3A0A] text-xs font-bold rounded-full">
                 ★ KHÁCH HÀNG ƯU TIÊN
               </div>
             )}
-            <div className="mt-2 text-6xl font-medium text-[#141413] tracking-tight font-mono">
+            <div className="mt-2 text-6xl sm:text-7xl font-bold text-[#bb302a] tracking-tight font-mono">
               {ticket.ticketNumber}
             </div>
-            <p className="text-xs text-[#696969] mt-1.5">
+            <p className="text-xs sm:text-sm text-[#696969] mt-2 font-medium">
               Quý khách vui lòng chú ý loa và màn hình thông báo
             </p>
           </div>
 
           {/* Details Grid */}
-          <div className="grid grid-cols-2 gap-3 text-left bg-[#F3F0EE] p-4 rounded-[20px] text-xs">
+          <div className="grid grid-cols-2 gap-3 text-left bg-[#F3F0EE] p-4.5 rounded-[20px] text-xs sm:text-sm">
             <div>
-              <span className="text-[#696969] block text-[11px]">Họ tên:</span>
-              <strong className="text-[#141413] text-sm truncate block font-medium">{ticket.citizen.name}</strong>
+              <span className="text-[#696969] block text-xs font-medium">Họ tên:</span>
+              <strong className="text-[#141413] text-sm sm:text-base truncate block font-bold">{ticket.citizen.name}</strong>
             </div>
             <div>
-              <span className="text-[#696969] block text-[11px]">Giờ lấy vé:</span>
-              <strong className="text-[#141413] text-sm block font-medium">
+              <span className="text-[#696969] block text-xs font-medium">Giờ lấy vé:</span>
+              <strong className="text-[#141413] text-sm sm:text-base block font-bold font-mono">
                 {new Date(ticket.issuedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
               </strong>
             </div>
-            <div className="flex items-center gap-1.5 text-[#141413] font-medium pt-1">
-              <Users className="w-3.5 h-3.5 text-[#bb302a]" />
+            <div className="flex items-center gap-1.5 text-[#141413] font-semibold pt-1">
+              <Users className="w-4 h-4 text-[#bb302a]" />
               <span>Chờ: ~{Math.max(1, Math.round(ticket.estimatedWaitMinutes / 5))} người</span>
             </div>
-            <div className="flex items-center gap-1.5 text-[#141413] font-medium pt-1">
-              <Clock className="w-3.5 h-3.5 text-[#bb302a]" />
+            <div className="flex items-center gap-1.5 text-[#141413] font-semibold pt-1">
+              <Clock className="w-4 h-4 text-[#bb302a]" />
               <span>Dự kiến: ~{ticket.estimatedWaitMinutes} phút</span>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function TicketReceiptModal({ ticket, onClose }: TicketReceiptMod
             <div className="p-3 bg-white border border-[#141413]/10 rounded-[20px] shadow-sm">
               <QrCode className="w-20 h-20 text-[#141413]" />
             </div>
-            <span className="text-[11px] text-[#696969] mt-2 font-medium">
+            <span className="text-xs text-[#696969] mt-2 font-medium">
               Quét QR để theo dõi tiến độ giải quyết
             </span>
           </div>
@@ -88,9 +88,9 @@ export default function TicketReceiptModal({ ticket, onClose }: TicketReceiptMod
           {/* Primary Ink Pill Button (20px radius) */}
           <button
             onClick={onClose}
-            className="w-full py-3.5 bg-[#141413] hover:bg-[#262627] text-[#F3F0EE] font-medium rounded-[20px] shadow-sm flex items-center justify-center gap-2 transition-all transform active:scale-98"
+            className="w-full py-4 bg-[#141413] hover:bg-[#262627] text-[#F3F0EE] font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2 text-sm sm:text-base transition-all transform active:scale-98"
           >
-            <CheckCircle2 className="w-4 h-4 text-[#F79E1B]" />
+            <CheckCircle2 className="w-5 h-5 text-[#F79E1B]" />
             <span>Hoàn tất & Nhận phiếu</span>
           </button>
         </div>
