@@ -97,13 +97,6 @@ export default function TicketReceiptModal({ ticket, onClose }: TicketReceiptMod
             <span>Hoàn tất & Nhận phiếu</span>
           </button>
         </div>
-
-        {/* Paper tear simulation bottom edge */}
-        <div className="flex justify-between px-2 py-1.5 bg-[#FCFBFA] border-t border-dashed border-[#141413]/10">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <div key={i} className="w-2.5 h-2.5 bg-[#141413]/20 rounded-full" />
-          ))}
-        </div>
       </div>
     </div>
   );
