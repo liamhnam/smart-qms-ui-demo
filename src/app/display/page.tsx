@@ -28,12 +28,13 @@ export default function DisplayPage() {
     <div className="h-screen max-h-screen overflow-hidden bg-[#F3F0EE] text-[#141413] flex flex-col justify-between pt-16 sm:pt-18 pb-3 px-4 sm:px-6 select-none relative">
       {/* Top Header Bar (Stadium 32px / White Pill on Canvas Cream) */}
       <header className="flex items-center justify-between py-3 px-6 sm:px-8 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] mb-3 flex-shrink-0">
-        <div className="flex items-center gap-4">
-          {/* Dual-Circle Administrative Mark (#bb302a + #F79E1B) */}
-          <div className="relative flex items-center h-10 flex-shrink-0">
-            <div className="w-9 h-9 rounded-full bg-[#bb302a] opacity-95 shadow-sm" />
-            <div className="w-9 h-9 rounded-full bg-[#F79E1B] opacity-90 -ml-4 mix-blend-multiply" />
-          </div>
+        <div className="flex items-center gap-3.5">
+          {/* Administrative Emblem Logo */}
+          <img
+            src="/logo.png"
+            alt="Logo Một Cửa"
+            className="w-11 h-11 object-contain flex-shrink-0 drop-shadow-sm"
+          />
           <div>
             <span className="text-xs font-bold text-[#bb302a] tracking-wider uppercase block">
               • BẢNG ĐIỀU TIẾT GỌI SỐ TRUNG TÂM
@@ -46,11 +47,11 @@ export default function DisplayPage() {
 
         {/* Layout Switcher & Live Clock */}
         <div className="flex items-center gap-5">
-          {/* Layout mode buttons */}
-          <div className="hidden sm:flex items-center gap-1 bg-[#F3F0EE] p-1 rounded-full border border-[#141413]/10 text-xs font-semibold">
+          {/* Layout mode buttons (Touchscreen Ergonomic) */}
+          <div className="hidden sm:flex items-center gap-1.5 bg-[#F3F0EE] p-1 rounded-full border border-[#141413]/10 text-xs sm:text-sm font-semibold">
             <button
               onClick={() => setLayoutMode('7-3')}
-              className={`px-3 py-1.5 rounded-full transition-all ${
+              className={`px-4 py-2 min-h-[40px] rounded-full transition-all active:scale-95 touch-manipulation ${
                 layoutMode === '7-3'
                   ? 'bg-[#141413] text-[#F3F0EE] shadow-sm'
                   : 'text-[#696969] hover:text-[#141413]'
@@ -60,7 +61,7 @@ export default function DisplayPage() {
             </button>
             <button
               onClick={() => setLayoutMode('5-5')}
-              className={`px-3 py-1.5 rounded-full transition-all ${
+              className={`px-4 py-2 min-h-[40px] rounded-full transition-all active:scale-95 touch-manipulation ${
                 layoutMode === '5-5'
                   ? 'bg-[#141413] text-[#F3F0EE] shadow-sm'
                   : 'text-[#696969] hover:text-[#141413]'
@@ -70,7 +71,7 @@ export default function DisplayPage() {
             </button>
             <button
               onClick={() => setLayoutMode('full')}
-              className={`px-3 py-1.5 rounded-full transition-all ${
+              className={`px-4 py-2 min-h-[40px] rounded-full transition-all active:scale-95 touch-manipulation ${
                 layoutMode === 'full'
                   ? 'bg-[#141413] text-[#F3F0EE] shadow-sm'
                   : 'text-[#696969] hover:text-[#141413]'

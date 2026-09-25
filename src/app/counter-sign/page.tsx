@@ -29,12 +29,13 @@ export default function CounterSignPage() {
     <div className="h-screen max-h-screen overflow-hidden bg-[#F3F0EE] text-[#141413] flex flex-col justify-between pt-16 sm:pt-18 pb-4 px-4 sm:px-8 select-none relative">
       {/* Top Banner Header (Stadium 32px on #FCFBFA) */}
       <header className="max-w-5xl mx-auto w-full flex items-center justify-between py-3 px-6 sm:px-8 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex-shrink-0 mb-2">
-        <div className="flex items-center gap-4">
-          {/* Dual-Circle Administrative Mark (#bb302a + #F79E1B) */}
-          <div className="relative flex items-center h-10 flex-shrink-0">
-            <div className="w-9 h-9 rounded-full bg-[#bb302a] opacity-95 shadow-sm" />
-            <div className="w-9 h-9 rounded-full bg-[#F79E1B] opacity-90 -ml-4 mix-blend-multiply" />
-          </div>
+        <div className="flex items-center gap-3.5">
+          {/* Administrative Emblem Logo */}
+          <img
+            src="/logo.png"
+            alt="Logo Một Cửa"
+            className="w-11 h-11 object-contain flex-shrink-0 drop-shadow-sm"
+          />
           <div>
             <span className="text-xs font-bold text-[#bb302a] tracking-wider uppercase block">
               • BẢNG THÔNG TIN ĐIỆN TỬ TẠI QUẦY
@@ -51,7 +52,7 @@ export default function CounterSignPage() {
             <select
               value={activeCounterId}
               onChange={(e) => setActiveCounterId(e.target.value)}
-              className="bg-white text-[#141413] font-bold text-xs sm:text-sm px-3.5 py-1.5 rounded-full border border-[#141413]/15 cursor-pointer appearance-none pr-8 focus:outline-none shadow-sm"
+              className="min-h-[44px] bg-white text-[#141413] font-bold text-xs sm:text-sm px-4 py-2 rounded-full border border-[#141413]/15 cursor-pointer appearance-none pr-8 focus:outline-none shadow-sm touch-manipulation"
             >
               {counters.map((c) => (
                 <option key={c.id} value={c.id} className="bg-[#FCFBFA] text-[#141413]">
@@ -59,7 +60,7 @@ export default function CounterSignPage() {
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-[#696969] absolute right-2.5 top-2.5 pointer-events-none" />
+            <ChevronDown className="w-4 h-4 text-[#696969] absolute right-3 top-3 pointer-events-none" />
           </div>
 
           <div className="text-right hidden sm:block">

@@ -90,11 +90,12 @@ export default function KioskPage() {
       {/* Top Kiosk Header (32px Stadium shape on #FCFBFA) */}
       <header className="max-w-5xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-4 py-3.5 px-8 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex-shrink-0">
         <div className="flex items-center gap-4 text-center sm:text-left">
-          {/* Dual-Circle Administrative Mark (#bb302a + #F79E1B) */}
-          <div className="relative flex items-center h-12 flex-shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#bb302a] opacity-95 shadow-sm" />
-            <div className="w-10 h-10 rounded-full bg-[#F79E1B] opacity-90 -ml-5 mix-blend-multiply" />
-          </div>
+          {/* Administrative Emblem Logo */}
+          <img
+            src="/logo.png"
+            alt="Logo Một Cửa"
+            className="w-12 h-12 object-contain flex-shrink-0 drop-shadow-sm"
+          />
           <div>
             <span className="text-xs font-bold text-[#bb302a] tracking-wider uppercase block">
               • BỘ PHẬN TIẾP NHẬN & TRẢ KẾT QUẢ MỘT CỬA
@@ -120,16 +121,16 @@ export default function KioskPage() {
             </div>
           </div>
 
-          {/* Priority Pill Button */}
+          {/* Priority Pill Button (Optimized for 22/24 inch touch) */}
           <button
             onClick={() => setIsPriorityMode(!isPriorityMode)}
-            className={`px-4 py-2.5 rounded-[20px] text-xs sm:text-sm font-bold transition-all flex items-center gap-2 shadow-sm ${
+            className={`px-5 py-2.5 min-h-[48px] rounded-full text-xs sm:text-sm font-bold transition-all flex items-center gap-2 shadow-sm active:scale-95 ${
               isPriorityMode
                 ? 'bg-[#bb302a] text-white ring-2 ring-[#bb302a]/30'
                 : 'bg-white border-[1.5px] border-[#141413] text-[#141413] hover:bg-[#F3F0EE]'
             }`}
           >
-            <HeartHandshake className="w-4 h-4 text-[#F79E1B]" />
+            <HeartHandshake className="w-5 h-5 text-[#F79E1B]" />
             <span>{isPriorityMode ? 'Chế độ Ưu tiên: BẬT' : 'Khách hàng Ưu tiên?'}</span>
           </button>
         </div>
@@ -147,24 +148,24 @@ export default function KioskPage() {
           </h2>
         </div>
 
-        {/* 4 Service Cards with Circular Portraits & Docked Satellite Micro-CTAs */}
+        {/* 4 Service Cards with Circular Portraits & Docked Satellite Micro-CTAs (Touchscreen Optimized) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {categories.map((cat) => (
             <div
               key={cat.id}
               onClick={() => handleSelectCategory(cat)}
-              className="group relative cursor-pointer bg-[#FCFBFA] hover:bg-white rounded-[32px] p-5 sm:p-6 border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between"
+              className="group relative cursor-pointer bg-[#FCFBFA] hover:bg-white active:bg-[#F0EBE6] active:scale-[0.98] rounded-[32px] p-5 sm:p-6 border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_20px_40px_rgba(0,0,0,0.08)] transition-all duration-150 flex flex-col justify-between touch-manipulation select-none"
             >
               <div className="flex items-start gap-4 sm:gap-5">
                 {/* Circular Portrait with Satellite Micro-CTA */}
                 <div className="relative flex-shrink-0">
-                  <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-[#F3F0EE] border border-[#141413]/10 flex items-center justify-center group-hover:scale-105 transition-transform p-3">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#F3F0EE] border border-[#141413]/10 flex items-center justify-center group-hover:scale-105 transition-transform p-3.5 shadow-inner">
                     {getCategoryIcon(cat.iconName)}
                   </div>
 
                   {/* Satellite Circular Micro-CTA docked at bottom-right */}
-                  <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-white border border-[#141413]/15 shadow-md flex items-center justify-center text-[#141413] group-hover:bg-[#141413] group-hover:text-white transition-all">
-                    <ArrowRight className="w-3.5 h-3.5" />
+                  <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-white border border-[#141413]/15 shadow-md flex items-center justify-center text-[#141413] group-hover:bg-[#141413] group-hover:text-white group-active:bg-[#bb302a] transition-all">
+                    <ArrowRight className="w-4 h-4" />
                   </div>
                 </div>
 
@@ -174,36 +175,36 @@ export default function KioskPage() {
                     <span className="text-xs font-bold text-[#bb302a] tracking-wider uppercase">
                       • LĨNH VỰC {cat.prefix}
                     </span>
-                    <span className="text-xs font-mono font-bold text-[#141413] bg-[#F3F0EE] px-2.5 py-0.5 rounded-full">
+                    <span className="text-xs font-mono font-bold text-[#141413] bg-[#F3F0EE] px-3 py-1 rounded-full border border-[#141413]/5">
                       Số hiện tại: {cat.prefix}-{String(cat.currentNumber).padStart(3, '0')}
                     </span>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-bold text-[#141413] group-hover:text-[#bb302a] transition-colors leading-snug truncate">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#141413] group-hover:text-[#bb302a] transition-colors leading-tight truncate">
                     {cat.name}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#555555] mt-1 leading-relaxed line-clamp-2">
+                  <p className="text-xs sm:text-sm text-[#555555] mt-1.5 leading-relaxed line-clamp-2">
                     {cat.description}
                   </p>
                 </div>
               </div>
 
               {/* Waiting Status Bar */}
-              <div className="mt-4 pt-3 border-t border-[#141413]/10 flex items-center justify-between text-xs sm:text-sm text-[#555555]">
+              <div className="mt-4 pt-3.5 border-t border-[#141413]/10 flex items-center justify-between text-xs sm:text-sm text-[#555555]">
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-1.5">
-                    <Users className="w-3.5 h-3.5 text-[#bb302a]" />
-                    <span>Đang chờ: <strong className="text-[#141413] font-bold">{cat.waitingCount} người</strong></span>
+                    <Users className="w-4 h-4 text-[#bb302a]" />
+                    <span>Đang chờ: <strong className="text-[#141413] font-bold text-sm">{cat.waitingCount} người</strong></span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-[#bb302a]" />
-                    <span>Dự kiến: <strong className="text-[#141413] font-bold">~{cat.waitingCount * cat.averageWaitMinutes}p</strong></span>
+                    <Clock className="w-4 h-4 text-[#bb302a]" />
+                    <span>Dự kiến: <strong className="text-[#141413] font-bold text-sm">~{cat.waitingCount * cat.averageWaitMinutes}p</strong></span>
                   </div>
                 </div>
 
-                <span className="text-xs sm:text-sm font-bold text-[#141413] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                  Lấy số ngay
-                  <ArrowRight className="w-3.5 h-3.5 text-[#bb302a]" />
+                <span className="text-sm font-bold text-[#141413] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-[#141413]/10 shadow-sm">
+                  <span>Chạm lấy số</span>
+                  <ArrowRight className="w-4 h-4 text-[#bb302a]" />
                 </span>
               </div>
             </div>
@@ -214,18 +215,18 @@ export default function KioskPage() {
       {/* Alternative Entry Options (CCCD Chip & Online QR Check-in) */}
       <footer className="max-w-5xl mx-auto w-full flex-shrink-0 pt-2">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Scan CCCD Chip Card */}
+          {/* Scan CCCD Chip Card (Touchscreen Ergonomic) */}
           <button
             onClick={() => setIsCccdOpen(true)}
-            className="flex items-center justify-center gap-4 py-3.5 px-6 bg-white hover:bg-[#FCFBFA] border border-[#141413]/10 rounded-[28px] shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_12px_28px_rgba(0,0,0,0.06)] transition-all group text-left"
+            className="flex items-center justify-center gap-4 py-4 px-6 min-h-[76px] bg-white hover:bg-[#FCFBFA] active:bg-[#F3EDE8] active:scale-[0.98] border border-[#141413]/10 rounded-[28px] shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_12px_28px_rgba(0,0,0,0.06)] transition-all group text-left touch-manipulation select-none"
           >
-            <div className="w-11 h-11 rounded-full bg-[#bb302a]/10 text-[#bb302a] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-              <CreditCard className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-full bg-[#bb302a]/10 text-[#bb302a] flex items-center justify-center flex-shrink-0 group-hover:scale-105 group-active:scale-95 transition-transform shadow-sm">
+              <CreditCard className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-xs sm:text-sm font-bold text-[#141413] flex items-center gap-2">
+              <div className="text-sm sm:text-base font-bold text-[#141413] flex items-center gap-2">
                 <span>Quét Căn cước công dân gắn chíp</span>
-                <span className="px-2 py-0.5 text-[10px] bg-[#bb302a]/10 text-[#bb302a] rounded-full font-bold">
+                <span className="px-2.5 py-0.5 text-[10px] bg-[#bb302a]/10 text-[#bb302a] rounded-full font-bold">
                   TỰ ĐỘNG
                 </span>
               </div>
@@ -235,18 +236,18 @@ export default function KioskPage() {
             </div>
           </button>
 
-          {/* Scan QR Online Booking */}
+          {/* Scan QR Online Booking (Touchscreen Ergonomic) */}
           <button
             onClick={() => setIsQrOpen(true)}
-            className="flex items-center justify-center gap-4 py-3.5 px-6 bg-white hover:bg-[#FCFBFA] border border-[#141413]/10 rounded-[28px] shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_12px_28px_rgba(0,0,0,0.06)] transition-all group text-left"
+            className="flex items-center justify-center gap-4 py-4 px-6 min-h-[76px] bg-white hover:bg-[#FCFBFA] active:bg-[#F3EDE8] active:scale-[0.98] border border-[#141413]/10 rounded-[28px] shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_12px_28px_rgba(0,0,0,0.06)] transition-all group text-left touch-manipulation select-none"
           >
-            <div className="w-11 h-11 rounded-full bg-[#F79E1B]/15 text-[#9A3A0A] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-              <QrCode className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-full bg-[#F79E1B]/15 text-[#9A3A0A] flex items-center justify-center flex-shrink-0 group-hover:scale-105 group-active:scale-95 transition-transform shadow-sm">
+              <QrCode className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-xs sm:text-sm font-bold text-[#141413] flex items-center gap-2">
+              <div className="text-sm sm:text-base font-bold text-[#141413] flex items-center gap-2">
                 <span>Check-in Lịch hẹn Zalo / Trực tuyến</span>
-                <span className="px-2 py-0.5 text-[10px] bg-[#F79E1B]/20 text-[#9A3A0A] rounded-full font-bold">
+                <span className="px-2.5 py-0.5 text-[10px] bg-[#F79E1B]/20 text-[#9A3A0A] rounded-full font-bold">
                   ƯU TIÊN
                 </span>
               </div>

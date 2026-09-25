@@ -117,7 +117,12 @@ export default function TellerPage() {
       <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 py-2.5 px-6 sm:px-8 bg-[#FCFBFA] rounded-[28px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] mb-2.5 flex-shrink-0">
         {/* Left: Counter Selection */}
         <div className="flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-full bg-[#bb302a] text-white flex items-center justify-center font-bold text-sm shadow-sm">
+          <img
+            src="/logo.png"
+            alt="Logo Một Cửa"
+            className="w-10 h-10 object-contain flex-shrink-0 drop-shadow-sm"
+          />
+          <div className="w-10 h-10 rounded-full bg-[#bb302a] text-white flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0">
             {activeCounter?.code || '01'}
           </div>
           <div>
@@ -256,14 +261,14 @@ export default function TellerPage() {
               )}
             </div>
 
-            {/* Tactical Control Action Buttons */}
+            {/* Tactical Control Action Buttons (Touchscreen Optimized for 22/24 inch) */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-3 border-t border-[#141413]/10 flex-shrink-0">
               {/* Call Next Button (Administrative Red #bb302a) */}
               <button
                 onClick={handleCallNext}
-                className="py-3 px-4 bg-[#bb302a] hover:bg-[#a62a25] text-white font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2 transition-all transform active:scale-98 text-xs sm:text-sm"
+                className="min-h-[58px] sm:min-h-[62px] py-3 px-4 bg-[#bb302a] hover:bg-[#a62a25] active:bg-[#93231e] text-white font-bold rounded-[22px] shadow-sm flex items-center justify-center gap-2.5 transition-all active:scale-95 text-xs sm:text-sm lg:text-base tracking-wide touch-manipulation select-none"
               >
-                <PhoneCall className="w-4 h-4" />
+                <PhoneCall className="w-5 h-5" />
                 <span>GỌI TIẾP THEO</span>
               </button>
 
@@ -271,9 +276,9 @@ export default function TellerPage() {
               <button
                 disabled={!servingTicket}
                 onClick={handleRecall}
-                className="py-3 px-4 bg-[#141413] hover:bg-[#262627] disabled:opacity-40 text-[#F3F0EE] font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2 transition-all transform active:scale-98 text-xs sm:text-sm"
+                className="min-h-[58px] sm:min-h-[62px] py-3 px-4 bg-[#141413] hover:bg-[#262627] active:bg-[#0a0a09] disabled:opacity-40 text-[#F3F0EE] font-bold rounded-[22px] shadow-sm flex items-center justify-center gap-2.5 transition-all active:scale-95 text-xs sm:text-sm lg:text-base tracking-wide touch-manipulation select-none"
               >
-                <RotateCcw className="w-4 h-4 text-[#F79E1B]" />
+                <RotateCcw className="w-5 h-5 text-[#F79E1B]" />
                 <span>GỌI LẠI</span>
               </button>
 
@@ -281,9 +286,9 @@ export default function TellerPage() {
               <button
                 disabled={!servingTicket}
                 onClick={handleComplete}
-                className="py-3 px-4 bg-white border-[1.5px] border-[#141413] hover:bg-[#F3F0EE] disabled:opacity-40 text-[#141413] font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2 transition-all transform active:scale-98 text-xs sm:text-sm"
+                className="min-h-[58px] sm:min-h-[62px] py-3 px-4 bg-white border-[2px] border-[#141413] hover:bg-[#F3F0EE] active:bg-[#EAE5E2] disabled:opacity-40 text-[#141413] font-bold rounded-[22px] shadow-sm flex items-center justify-center gap-2.5 transition-all active:scale-95 text-xs sm:text-sm lg:text-base tracking-wide touch-manipulation select-none"
               >
-                <CheckCircle2 className="w-4 h-4 text-[#bb302a]" />
+                <CheckCircle2 className="w-5 h-5 text-[#bb302a]" />
                 <span>HOÀN THÀNH</span>
               </button>
 
@@ -291,9 +296,9 @@ export default function TellerPage() {
               <button
                 disabled={!servingTicket}
                 onClick={handleSkip}
-                className="py-2.5 px-3 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] disabled:opacity-40 text-[#444444] font-semibold rounded-[18px] flex items-center justify-center gap-1.5 transition-all text-xs"
+                className="min-h-[46px] py-2.5 px-3 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] active:bg-[#EAE5E2] disabled:opacity-40 text-[#444444] font-bold rounded-[18px] flex items-center justify-center gap-2 transition-all active:scale-95 text-xs sm:text-sm touch-manipulation select-none"
               >
-                <SkipForward className="w-3.5 h-3.5 text-[#CF4500]" />
+                <SkipForward className="w-4 h-4 text-[#CF4500]" />
                 <span>Bỏ qua / Vắng</span>
               </button>
 
@@ -301,18 +306,18 @@ export default function TellerPage() {
               <button
                 disabled={!servingTicket}
                 onClick={() => setShowTransferModal(true)}
-                className="py-2.5 px-3 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] disabled:opacity-40 text-[#444444] font-semibold rounded-[18px] flex items-center justify-center gap-1.5 transition-all text-xs"
+                className="min-h-[46px] py-2.5 px-3 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] active:bg-[#EAE5E2] disabled:opacity-40 text-[#444444] font-bold rounded-[18px] flex items-center justify-center gap-2 transition-all active:scale-95 text-xs sm:text-sm touch-manipulation select-none"
               >
-                <ArrowRightLeft className="w-3.5 h-3.5 text-[#141413]" />
+                <ArrowRightLeft className="w-4 h-4 text-[#141413]" />
                 <span>Chuyển quầy</span>
               </button>
 
               {/* Issue Direct Ticket Button */}
               <button
                 onClick={handleDirectTicket}
-                className="py-2.5 px-3 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] text-[#444444] font-semibold rounded-[18px] flex items-center justify-center gap-1.5 transition-all text-xs"
+                className="min-h-[46px] py-2.5 px-3 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] active:bg-[#EAE5E2] text-[#444444] font-bold rounded-[18px] flex items-center justify-center gap-2 transition-all active:scale-95 text-xs sm:text-sm touch-manipulation select-none"
               >
-                <PlusCircle className="w-3.5 h-3.5 text-[#bb302a]" />
+                <PlusCircle className="w-4 h-4 text-[#bb302a]" />
                 <span>Cấp vé tại quầy</span>
               </button>
             </div>

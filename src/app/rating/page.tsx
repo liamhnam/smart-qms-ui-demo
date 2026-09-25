@@ -122,11 +122,12 @@ export default function RatingPage() {
     <div className="h-screen max-h-screen overflow-hidden bg-[#F3F0EE] text-[#141413] flex flex-col justify-between pt-16 sm:pt-18 pb-4 px-4 sm:px-8 select-none relative">
       {/* Top Tablet Header (Stadium 32px on #FCFBFA) */}
       <header className="relative z-10 max-w-4xl mx-auto w-full flex items-center justify-between py-3 px-6 sm:px-8 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex-shrink-0">
-        <div className="flex items-center gap-4">
-          <div className="relative flex items-center h-9">
-            <div className="w-8 h-8 rounded-full bg-[#bb302a] opacity-95 shadow-sm" />
-            <div className="w-8 h-8 rounded-full bg-[#F79E1B] opacity-90 -ml-4 mix-blend-multiply" />
-          </div>
+        <div className="flex items-center gap-3.5">
+          <img
+            src="/logo.png"
+            alt="Logo Một Cửa"
+            className="w-10 h-10 object-contain flex-shrink-0 drop-shadow-sm"
+          />
           <div>
             <span className="eyebrow-label text-[#bb302a] block text-xs font-bold">
               • KHẢO SÁT ĐỘ HÀI LÒNG CỦA CÔNG DÂN
@@ -141,9 +142,9 @@ export default function RatingPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowQrPaymentModal(true)}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white border border-[#141413]/15 text-[#141413] rounded-full text-xs font-semibold hover:bg-[#F3F0EE] transition-all shadow-sm"
+            className="min-h-[44px] flex items-center gap-2 px-4 py-2 bg-white border border-[#141413]/15 text-[#141413] rounded-full text-xs sm:text-sm font-semibold hover:bg-[#F3F0EE] active:scale-95 transition-all shadow-sm touch-manipulation"
           >
-            <CreditCard className="w-3.5 h-3.5 text-[#bb302a]" />
+            <CreditCard className="w-4 h-4 text-[#bb302a]" />
             <span>Thu phí VietQR</span>
           </button>
 
@@ -151,7 +152,7 @@ export default function RatingPage() {
             <select
               value={activeCounterId}
               onChange={(e) => setActiveCounterId(e.target.value)}
-              className="bg-white text-[#141413] font-semibold text-xs px-3.5 py-1.5 rounded-full border border-[#141413]/15 cursor-pointer appearance-none pr-7 focus:outline-none shadow-sm"
+              className="min-h-[44px] bg-white text-[#141413] font-semibold text-xs sm:text-sm px-4 py-2 rounded-full border border-[#141413]/15 cursor-pointer appearance-none pr-8 focus:outline-none shadow-sm touch-manipulation"
             >
               {counters.map((c) => (
                 <option key={c.id} value={c.id} className="bg-[#FCFBFA] text-[#141413]">
@@ -159,7 +160,7 @@ export default function RatingPage() {
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-[#696969] absolute right-2 top-2 pointer-events-none" />
+            <ChevronDown className="w-4 h-4 text-[#696969] absolute right-3 top-3 pointer-events-none" />
           </div>
         </div>
       </header>
@@ -204,8 +205,8 @@ export default function RatingPage() {
               </p>
             </div>
 
-            {/* 5 Circular/Pill Emoji Options */}
-            <div className="grid grid-cols-5 gap-2.5 sm:gap-3 mb-4">
+            {/* 5 Circular/Pill Emoji Options (Touchscreen Ergonomic) */}
+            <div className="grid grid-cols-5 gap-2.5 sm:gap-3.5 mb-4">
               {RATING_OPTIONS.map((option) => {
                 const isSelected = selectedScore === option.score;
                 return (
@@ -215,16 +216,16 @@ export default function RatingPage() {
                       setSelectedScore(option.score);
                       setSelectedTags([]);
                     }}
-                    className={`py-3.5 sm:py-4 px-2 rounded-[20px] border transition-all duration-200 flex flex-col items-center justify-center gap-1.5 transform active:scale-95 ${
+                    className={`min-h-[110px] sm:min-h-[120px] py-4 px-2 rounded-[22px] border transition-all duration-150 flex flex-col items-center justify-center gap-2 transform active:scale-95 touch-manipulation select-none ${
                       isSelected
-                        ? `${option.color} scale-105 shadow-md`
-                        : 'bg-[#F3F0EE] text-[#696969] border-transparent hover:bg-white hover:text-[#141413]'
+                        ? `${option.color} scale-105 shadow-md ring-2 ring-[#bb302a]/20`
+                        : 'bg-[#F3F0EE] text-[#696969] border-transparent hover:bg-white hover:text-[#141413] active:bg-[#ECE6E2]'
                     }`}
                   >
-                    <span className="text-3xl sm:text-4xl filter drop-shadow-sm transition-transform hover:scale-110">
+                    <span className="text-4xl sm:text-5xl filter drop-shadow-sm transition-transform hover:scale-110">
                       {option.emoji}
                     </span>
-                    <span className="text-[11px] sm:text-xs font-bold text-center leading-tight text-[#141413]">
+                    <span className="text-xs sm:text-sm font-bold text-center leading-tight text-[#141413]">
                       {option.label}
                     </span>
                   </button>
@@ -232,22 +233,22 @@ export default function RatingPage() {
               })}
             </div>
 
-            {/* Dynamic Reason Tags (Pill 20px radius) */}
-            <div className="mb-3.5 p-3.5 bg-[#F3F0EE] rounded-[20px] border border-[#141413]/5">
-              <span className="eyebrow-label text-[#696969] block mb-2 text-xs font-bold">
-                • LÝ DO QUÝ KHÁCH ĐÁNH GIÁ (CHỌN MỘT HOẶC NHIỀU TIÊU CHÍ):
+            {/* Dynamic Reason Tags (Pill 20px radius, Touchscreen Ergonomic) */}
+            <div className="mb-3.5 p-4 bg-[#F3F0EE] rounded-[22px] border border-[#141413]/5">
+              <span className="eyebrow-label text-[#696969] block mb-2.5 text-xs font-bold">
+                • LÝ DO QUÝ KHÁCH ĐÁNH GIÁ (CHẠM ĐỂ CHỌN MỘT HOẶC NHIỀU TIÊU CHÍ):
               </span>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2.5">
                 {currentOption.tags.map((tag) => {
                   const isChecked = selectedTags.includes(tag);
                   return (
                     <button
                       key={tag}
                       onClick={() => handleTagToggle(tag)}
-                      className={`px-3.5 py-1.5 rounded-[16px] text-xs font-semibold border transition-all ${
+                      className={`px-4 sm:px-5 py-2.5 min-h-[42px] rounded-full text-xs sm:text-sm font-bold border transition-all active:scale-95 touch-manipulation select-none ${
                         isChecked
                           ? 'bg-[#141413] text-[#F3F0EE] border-[#141413] shadow-sm'
-                          : 'bg-white text-[#141413] border-[#141413]/10 hover:border-[#141413]'
+                          : 'bg-white text-[#141413] border-[#141413]/10 hover:border-[#141413] active:bg-[#F3F0EE]'
                       }`}
                     >
                       {tag}
@@ -264,16 +265,16 @@ export default function RatingPage() {
                 onChange={(e) => setFeedbackText(e.target.value)}
                 placeholder="Ý kiến đóng góp thêm của Quý khách (không bắt buộc)..."
                 rows={2}
-                className="w-full p-3 bg-white rounded-[16px] border border-[#141413]/15 text-xs sm:text-sm text-[#141413] placeholder-[#696969] focus:outline-none focus:border-[#141413] resize-none"
+                className="w-full p-3.5 bg-white rounded-[18px] border border-[#141413]/15 text-xs sm:text-sm text-[#141413] placeholder-[#696969] focus:outline-none focus:border-[#bb302a] resize-none"
               />
             </div>
 
-            {/* Submit Primary CTA (Ink Black Pill 20px radius) */}
+            {/* Submit Primary CTA (Touchscreen Ergonomic) */}
             <button
               onClick={handleSubmit}
-              className="w-full py-3.5 bg-[#141413] hover:bg-[#262627] text-[#F3F0EE] font-bold rounded-[18px] shadow-sm flex items-center justify-center gap-2 text-sm sm:text-base transition-all transform active:scale-98"
+              className="w-full min-h-[58px] sm:min-h-[62px] py-4 bg-[#141413] hover:bg-[#262627] active:bg-[#000000] text-[#F3F0EE] font-bold rounded-[22px] shadow-sm flex items-center justify-center gap-2.5 text-sm sm:text-base lg:text-lg transition-all active:scale-[0.98] touch-manipulation select-none"
             >
-              <ThumbsUp className="w-4 h-4 text-[#F79E1B]" />
+              <ThumbsUp className="w-5 h-5 text-[#F79E1B]" />
               <span>GỬI ĐÁNH GIÁ Ý KIẾN</span>
             </button>
           </div>

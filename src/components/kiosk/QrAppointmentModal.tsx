@@ -82,24 +82,24 @@ export default function QrAppointmentModal({
           </p>
         </div>
 
-        {/* Buttons (Pills 20px radius) */}
+        {/* Buttons (Touchscreen Ergonomic) */}
         <div className="mt-6 flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 py-3 bg-white border-[1.5px] border-[#141413] text-[#141413] text-xs font-medium rounded-[20px] hover:bg-[#F3F0EE] transition-all"
+            className="flex-1 min-h-[50px] py-3.5 bg-white border-[1.5px] border-[#141413] text-[#141413] text-sm font-bold rounded-[22px] hover:bg-[#F3F0EE] active:scale-95 transition-all touch-manipulation"
           >
             Hủy bỏ
           </button>
           <button
             disabled={isProcessing}
             onClick={handleSimulateCheckIn}
-            className="flex-1 py-3 bg-[#141413] hover:bg-[#262627] text-[#F3F0EE] text-xs font-medium rounded-[20px] transition-all flex items-center justify-center gap-1.5 shadow-sm"
+            className="flex-1 min-h-[50px] py-3.5 bg-[#141413] hover:bg-[#262627] active:bg-[#000000] text-[#F3F0EE] text-sm font-bold rounded-[22px] transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95 touch-manipulation"
           >
             {isProcessing ? (
               <span>Đang xác thực...</span>
             ) : (
               <>
-                <CheckCircle2 className="w-4 h-4 text-[#F79E1B]" />
+                <CheckCircle2 className="w-5 h-5 text-[#F79E1B]" />
                 <span>Nhận số ưu tiên ngay</span>
               </>
             )}

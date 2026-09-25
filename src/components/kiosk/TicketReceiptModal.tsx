@@ -19,15 +19,16 @@ export default function TicketReceiptModal({ ticket, onClose }: TicketReceiptMod
         <div className="bg-[#bb302a] px-6 py-6 text-white text-center relative">
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 p-2 rounded-full bg-white/15 hover:bg-white/25 text-white transition-all"
+            className="absolute top-5 right-5 p-2.5 rounded-full bg-white/20 hover:bg-white/30 active:scale-95 text-white transition-all touch-manipulation"
           >
             <X className="w-4 h-4" />
           </button>
           
-          {/* Dual circular logo indicator */}
-          <div className="flex items-center justify-center mb-2">
-            <div className="w-5 h-5 rounded-full bg-white opacity-95" />
-            <div className="w-5 h-5 rounded-full bg-[#F79E1B] opacity-90 -ml-2.5 mix-blend-screen" />
+          {/* Emblem Logo */}
+          <div className="flex items-center justify-center mb-2.5">
+            <div className="w-12 h-12 rounded-full bg-white p-1.5 shadow-md flex items-center justify-center">
+              <img src="/logo.png" alt="Logo Một Cửa" className="w-9 h-9 object-contain" />
+            </div>
           </div>
 
           <h3 className="font-bold text-base sm:text-lg tracking-tight uppercase">PHIẾU LẤY SỐ THỨ TỰ</h3>
@@ -85,10 +86,10 @@ export default function TicketReceiptModal({ ticket, onClose }: TicketReceiptMod
             </span>
           </div>
 
-          {/* Primary Ink Pill Button (20px radius) */}
+          {/* Primary Ink Pill Button (Touchscreen Ergonomic) */}
           <button
             onClick={onClose}
-            className="w-full py-4 bg-[#141413] hover:bg-[#262627] text-[#F3F0EE] font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2 text-sm sm:text-base transition-all transform active:scale-98"
+            className="w-full min-h-[54px] py-4 bg-[#141413] hover:bg-[#262627] active:bg-[#000000] text-[#F3F0EE] font-bold rounded-[22px] shadow-sm flex items-center justify-center gap-2 text-sm sm:text-base transition-all active:scale-[0.98] touch-manipulation select-none"
           >
             <CheckCircle2 className="w-5 h-5 text-[#F79E1B]" />
             <span>Hoàn tất & Nhận phiếu</span>

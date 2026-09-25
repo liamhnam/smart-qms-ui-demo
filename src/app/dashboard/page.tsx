@@ -44,51 +44,58 @@ export default function DashboardPage() {
       <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 flex flex-col justify-between min-h-0 space-y-2.5">
         {/* Dashboard Title & Quick Launch Bar */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 py-1 flex-shrink-0">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-[#141413]/10 rounded-full text-xs font-semibold mb-1 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#bb302a] animate-ping" />
-              <span className="eyebrow-label text-[#bb302a] font-bold">• GIÁM SÁT THỜI GIAN THỰC</span>
+          <div className="flex items-center gap-3.5">
+            <img
+              src="/logo.png"
+              alt="Logo Một Cửa"
+              className="w-11 h-11 object-contain flex-shrink-0 drop-shadow-sm"
+            />
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-0.5 bg-white border border-[#141413]/10 rounded-full text-xs font-semibold mb-1 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-[#bb302a] animate-ping" />
+                <span className="eyebrow-label text-[#bb302a] font-bold">• GIÁM SÁT THỜI GIAN THỰC</span>
+              </div>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#141413] tracking-tight">
+                Trung tâm Giám sát & Điều hành Xếp hàng Thông minh
+              </h1>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-[#141413] tracking-tight">
-              Trung tâm Giám sát & Điều hành Xếp hàng Thông minh
-            </h1>
           </div>
 
-          {/* Quick Nav Pills (White pills 20px radius) */}
+          {/* Quick Nav Pills (Touchscreen Ergonomic) */}
           <div className="flex flex-wrap items-center gap-2">
             <Link
               href="/kiosk"
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-4 py-2 min-h-[42px] bg-white hover:bg-[#FCFBFA] active:bg-[#F3F0EE] active:scale-95 text-[#141413] text-xs sm:text-sm font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all touch-manipulation"
             >
-              <Touchpad className="w-3.5 h-3.5 text-[#bb302a]" />
+              <Touchpad className="w-4 h-4 text-[#bb302a]" />
               <span>Kiosk</span>
             </Link>
             <Link
               href="/display"
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-4 py-2 min-h-[42px] bg-white hover:bg-[#FCFBFA] active:bg-[#F3F0EE] active:scale-95 text-[#141413] text-xs sm:text-sm font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all touch-manipulation"
             >
-              <Tv className="w-3.5 h-3.5 text-[#bb302a]" />
+              <Tv className="w-4 h-4 text-[#bb302a]" />
               <span>Màn hình TV</span>
             </Link>
             <Link
               href="/teller"
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-4 py-2 min-h-[42px] bg-white hover:bg-[#FCFBFA] active:bg-[#F3F0EE] active:scale-95 text-[#141413] text-xs sm:text-sm font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all touch-manipulation"
             >
-              <Headphones className="w-3.5 h-3.5 text-[#bb302a]" />
+              <Headphones className="w-4 h-4 text-[#bb302a]" />
               <span>Bàn gọi số</span>
             </Link>
             <Link
               href="/counter-sign"
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-4 py-2 min-h-[42px] bg-white hover:bg-[#FCFBFA] active:bg-[#F3F0EE] active:scale-95 text-[#141413] text-xs sm:text-sm font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all touch-manipulation"
             >
-              <MonitorDot className="w-3.5 h-3.5 text-[#bb302a]" />
+              <MonitorDot className="w-4 h-4 text-[#bb302a]" />
               <span>Bảng Quầy</span>
             </Link>
             <Link
               href="/rating"
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-4 py-2 min-h-[42px] bg-white hover:bg-[#FCFBFA] active:bg-[#F3F0EE] active:scale-95 text-[#141413] text-xs sm:text-sm font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all touch-manipulation"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#F79E1B]" />
+              <Sparkles className="w-4 h-4 text-[#F79E1B]" />
               <span>Tablet Đánh giá</span>
             </Link>
           </div>

@@ -101,12 +101,13 @@ export default function DemoControlBar() {
       {/* Floating White Pill Container (Radius 999px) */}
       <div className="bg-white/95 text-[#141413] backdrop-blur-xl border border-[#141413]/10 rounded-full shadow-[0px_4px_24px_rgba(0,0,0,0.08)] px-4 py-2.5 transition-all duration-300">
         <div className="flex items-center justify-between gap-3">
-          {/* Dual-Circle Brand Mark (#bb302a + #F79E1B) */}
-          <Link href="/dashboard" className="flex items-center gap-3 pl-1 group flex-shrink-0">
-            <div className="relative flex items-center h-9">
-              <div className="w-7 h-7 rounded-full bg-[#bb302a] opacity-95 transition-transform group-hover:scale-105" />
-              <div className="w-7 h-7 rounded-full bg-[#F79E1B] opacity-90 -ml-4 mix-blend-multiply transition-transform group-hover:scale-105" />
-            </div>
+          {/* Administrative Emblem Logo */}
+          <Link href="/dashboard" className="flex items-center gap-3 pl-1 group flex-shrink-0 active:scale-95 transition-transform">
+            <img
+              src="/logo.png"
+              alt="Logo Một Cửa"
+              className="w-8 h-8 object-contain drop-shadow-sm transition-transform group-hover:scale-105"
+            />
             <div className="hidden lg:block">
               <div className="text-sm font-bold tracking-tight text-[#141413] flex items-center gap-1.5">
                 <span>Smart QMS</span>
@@ -132,7 +133,7 @@ export default function DemoControlBar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-2 px-3.5 py-2 rounded-[20px] text-xs sm:text-sm transition-all duration-200 whitespace-nowrap ${
+                    className={`flex items-center gap-2 px-3.5 py-2.5 min-h-[44px] rounded-[20px] text-xs sm:text-sm transition-all duration-200 whitespace-nowrap active:scale-95 ${
                       isActive
                         ? 'bg-[#141413] text-[#F3F0EE] font-semibold shadow-sm'
                         : 'text-[#444444] hover:text-[#141413] hover:bg-[#F3F0EE] font-medium'
