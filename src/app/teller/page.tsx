@@ -112,23 +112,23 @@ export default function TellerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F0EE] text-[#141413] flex flex-col justify-between pt-24 sm:pt-28 pb-8 px-4 sm:px-8">
-      {/* Top Workstation Header Bar (Stadium 40px / #FCFBFA) */}
-      <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 py-5 px-8 sm:px-10 bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] mb-5">
+    <div className="h-screen max-h-screen overflow-hidden bg-[#F3F0EE] text-[#141413] flex flex-col justify-between pt-16 sm:pt-18 pb-3 px-4 sm:px-6 select-none relative">
+      {/* Top Workstation Header Bar (Stadium 28px / #FCFBFA) */}
+      <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 py-2.5 px-6 sm:px-8 bg-[#FCFBFA] rounded-[28px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] mb-2.5 flex-shrink-0">
         {/* Left: Counter Selection */}
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-[#bb302a] text-white flex items-center justify-center font-bold text-base shadow-sm">
+        <div className="flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-full bg-[#bb302a] text-white flex items-center justify-center font-bold text-sm shadow-sm">
             {activeCounter?.code || '01'}
           </div>
           <div>
-            <span className="text-xs sm:text-sm font-bold text-[#bb302a] tracking-wider uppercase block mb-0.5">
+            <span className="text-xs font-bold text-[#bb302a] tracking-wider uppercase block">
               • BÀN ĐIỀU KHIỂN CÁN BỘ TIẾP NHẬN
             </span>
             <div className="relative">
               <select
                 value={activeCounterId}
                 onChange={(e) => setActiveCounterId(e.target.value)}
-                className="bg-transparent text-[#141413] font-bold text-lg sm:text-xl focus:outline-none cursor-pointer pr-7 appearance-none border-b border-dashed border-[#141413]/25 hover:border-[#bb302a]"
+                className="bg-transparent text-[#141413] font-bold text-base sm:text-lg focus:outline-none cursor-pointer pr-6 appearance-none border-b border-dashed border-[#141413]/25 hover:border-[#bb302a]"
               >
                 {counters.map((c) => (
                   <option key={c.id} value={c.id} className="bg-[#FCFBFA] text-[#141413]">
@@ -136,23 +136,23 @@ export default function TellerPage() {
                   </option>
                 ))}
               </select>
-              <ChevronDown className="w-4 h-4 text-[#696969] absolute right-0 top-2 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 text-[#696969] absolute right-0 top-1.5 pointer-events-none" />
             </div>
           </div>
         </div>
 
         {/* Right: Assigned Staff & Shift Status */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           {activeCounter?.assignedStaff && (
-            <div className="flex items-center gap-3.5 bg-white py-2 px-4.5 rounded-full border border-[#141413]/10 shadow-sm">
+            <div className="flex items-center gap-2.5 bg-white py-1.5 px-3.5 rounded-full border border-[#141413]/10 shadow-sm">
               <img
                 src={activeCounter.assignedStaff.avatarUrl}
                 alt={activeCounter.assignedStaff.fullName}
-                className="w-10 h-10 rounded-full object-cover border border-[#141413]/10"
+                className="w-8 h-8 rounded-full object-cover border border-[#141413]/10"
               />
               <div className="text-left">
-                <div className="text-sm font-bold text-[#141413]">{activeCounter.assignedStaff.fullName}</div>
-                <div className="text-xs text-[#696969] flex items-center gap-2 font-medium">
+                <div className="text-xs font-bold text-[#141413]">{activeCounter.assignedStaff.fullName}</div>
+                <div className="text-[10px] text-[#696969] flex items-center gap-1.5 font-medium">
                   <span>{activeCounter.assignedStaff.employeeCode}</span>
                   <span>•</span>
                   <span className="text-[#9A3A0A] font-bold">★ {activeCounter.assignedStaff.ratingAverage}</span>
@@ -162,10 +162,10 @@ export default function TellerPage() {
           )}
 
           {/* Shift State Toggle */}
-          <div className="flex items-center gap-1.5 bg-[#F3F0EE] p-1.5 rounded-full border border-[#141413]/10 text-xs sm:text-sm font-semibold">
+          <div className="flex items-center gap-1 bg-[#F3F0EE] p-1 rounded-full border border-[#141413]/10 text-xs font-semibold">
             <button
               onClick={() => setShiftStatus('ACTIVE')}
-              className={`px-4 py-2 rounded-full transition-all ${
+              className={`px-3 py-1 rounded-full transition-all ${
                 shiftStatus === 'ACTIVE'
                   ? 'bg-[#141413] text-[#F3F0EE] shadow-sm'
                   : 'text-[#696969] hover:text-[#141413]'
@@ -175,7 +175,7 @@ export default function TellerPage() {
             </button>
             <button
               onClick={() => setShiftStatus('BREAK')}
-              className={`px-4 py-2 rounded-full transition-all ${
+              className={`px-3 py-1 rounded-full transition-all ${
                 shiftStatus === 'BREAK'
                   ? 'bg-[#bb302a] text-white shadow-sm'
                   : 'text-[#696969] hover:text-[#141413]'
@@ -188,55 +188,55 @@ export default function TellerPage() {
       </header>
 
       {/* Main 2-Column Workspace Grid */}
-      <main className="grid grid-cols-1 lg:grid-cols-12 gap-5 flex-1">
+      <main className="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 min-h-0 overflow-hidden">
         {/* Left Column (7 cols): Active Serving Card & Action Pills */}
-        <section className="lg:col-span-7 flex flex-col justify-between gap-5">
-          <div className="bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 p-8 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex-1 flex flex-col justify-between">
+        <section className="lg:col-span-7 flex flex-col justify-between min-h-0">
+          <div className="bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 p-5 sm:p-6 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex-1 flex flex-col justify-between min-h-0">
             {/* Top Serving Status */}
-            <div className="flex items-center justify-between pb-4 border-b border-[#141413]/10">
-              <span className="text-xs sm:text-sm font-bold text-[#bb302a] tracking-wider uppercase flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#bb302a] animate-ping" />
+            <div className="flex items-center justify-between pb-3 border-b border-[#141413]/10 flex-shrink-0">
+              <span className="text-xs font-bold text-[#bb302a] tracking-wider uppercase flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#bb302a] animate-ping" />
                 • CÔNG DÂN ĐANG PHỤC VỤ TẠI QUẦY
               </span>
 
               {servingTicket && (
-                <div className="flex items-center gap-2 px-4 py-1.5 bg-white border border-[#141413]/10 rounded-full text-sm font-mono font-bold text-[#141413] shadow-sm">
-                  <Timer className="w-4 h-4 text-[#bb302a] animate-spin" />
+                <div className="flex items-center gap-1.5 px-3 py-1 bg-white border border-[#141413]/10 rounded-full text-xs font-mono font-bold text-[#141413] shadow-sm">
+                  <Timer className="w-3.5 h-3.5 text-[#bb302a] animate-spin" />
                   <span>Thời lượng: {formatTimer(servingSeconds)}</span>
                 </div>
               )}
             </div>
 
             {/* Middle: Big Serving Number & Citizen Details */}
-            <div className="py-6 text-center">
+            <div className="py-2 text-center my-auto flex-1 flex flex-col justify-center min-h-0">
               {servingTicket ? (
                 <div>
-                  <span className="text-xs sm:text-sm font-bold text-[#696969] uppercase tracking-wider block mb-1">
+                  <span className="text-xs font-bold text-[#696969] uppercase tracking-wider block mb-0.5">
                     {servingTicket.categoryName}
                   </span>
-                  <div className="text-8xl sm:text-9xl font-bold font-mono text-[#bb302a] tracking-tight">
+                  <div className="text-7xl sm:text-8xl font-bold font-mono text-[#bb302a] tracking-tight leading-none">
                     {servingTicket.ticketNumber}
                   </div>
 
-                  <div className="mt-6 p-6 bg-[#F3F0EE] rounded-[28px] border border-[#141413]/10 max-w-lg mx-auto text-left grid grid-cols-2 gap-4 text-sm">
+                  <div className="mt-3 p-3.5 sm:p-4 bg-[#F3F0EE] rounded-[20px] border border-[#141413]/10 max-w-md mx-auto text-left grid grid-cols-2 gap-2 text-xs sm:text-sm">
                     <div>
-                      <span className="text-[#696969] block text-xs font-semibold">Họ tên công dân:</span>
-                      <strong className="text-[#141413] text-base sm:text-lg block truncate font-bold mt-0.5">{servingTicket.citizen.name}</strong>
+                      <span className="text-[#696969] block text-[11px] font-semibold">Họ tên công dân:</span>
+                      <strong className="text-[#141413] text-sm sm:text-base block truncate font-bold">{servingTicket.citizen.name}</strong>
                     </div>
                     <div>
-                      <span className="text-[#696969] block text-xs font-semibold">Số định danh (CCCD):</span>
-                      <span className="text-[#141413] font-mono text-base block font-bold mt-0.5">
+                      <span className="text-[#696969] block text-[11px] font-semibold">Số CCCD:</span>
+                      <span className="text-[#141413] font-mono text-xs sm:text-sm block font-bold">
                         {servingTicket.citizen.citizenId || '---'}
                       </span>
                     </div>
                     <div>
-                      <span className="text-[#696969] block text-xs font-semibold">Giờ lấy số:</span>
+                      <span className="text-[#696969] block text-[11px] font-semibold">Giờ lấy số:</span>
                       <span className="text-[#444444] font-medium">
                         {new Date(servingTicket.issuedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
                     <div>
-                      <span className="text-[#696969] block text-xs font-semibold">Phân loại:</span>
+                      <span className="text-[#696969] block text-[11px] font-semibold">Phân loại:</span>
                       <span className={servingTicket.citizen.isPriority ? 'text-[#bb302a] font-bold' : 'text-[#444444] font-medium'}>
                         {servingTicket.citizen.isPriority ? '★ Khách ưu tiên' : 'Tiêu chuẩn'}
                       </span>
@@ -244,12 +244,12 @@ export default function TellerPage() {
                   </div>
                 </div>
               ) : (
-                <div className="py-12 flex flex-col items-center justify-center text-[#696969]">
-                  <div className="w-22 h-22 rounded-full bg-[#F3F0EE] flex items-center justify-center mb-3">
-                    <User className="w-12 h-12 text-[#696969]/50" />
+                <div className="py-8 flex flex-col items-center justify-center text-[#696969]">
+                  <div className="w-16 h-16 rounded-full bg-[#F3F0EE] flex items-center justify-center mb-2">
+                    <User className="w-8 h-8 text-[#696969]/50" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#141413]">Quầy đang sẵn sàng</h3>
-                  <p className="text-sm text-[#696969] mt-1.5">
+                  <h3 className="text-lg font-bold text-[#141413]">Quầy đang sẵn sàng</h3>
+                  <p className="text-xs text-[#696969] mt-1">
                     Bấm &quot;GỌI TIẾP THEO&quot; để mời công dân kế tiếp vào phục vụ
                   </p>
                 </div>
@@ -257,13 +257,13 @@ export default function TellerPage() {
             </div>
 
             {/* Tactical Control Action Buttons */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 pt-5 border-t border-[#141413]/10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-3 border-t border-[#141413]/10 flex-shrink-0">
               {/* Call Next Button (Administrative Red #bb302a) */}
               <button
                 onClick={handleCallNext}
-                className="py-4 px-5 bg-[#bb302a] hover:bg-[#a62a25] text-white font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2.5 transition-all transform active:scale-98 text-sm sm:text-base"
+                className="py-3 px-4 bg-[#bb302a] hover:bg-[#a62a25] text-white font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2 transition-all transform active:scale-98 text-xs sm:text-sm"
               >
-                <PhoneCall className="w-5 h-5" />
+                <PhoneCall className="w-4 h-4" />
                 <span>GỌI TIẾP THEO</span>
               </button>
 
@@ -271,9 +271,9 @@ export default function TellerPage() {
               <button
                 disabled={!servingTicket}
                 onClick={handleRecall}
-                className="py-4 px-5 bg-[#141413] hover:bg-[#262627] disabled:opacity-40 text-[#F3F0EE] font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2.5 transition-all transform active:scale-98 text-sm sm:text-base"
+                className="py-3 px-4 bg-[#141413] hover:bg-[#262627] disabled:opacity-40 text-[#F3F0EE] font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2 transition-all transform active:scale-98 text-xs sm:text-sm"
               >
-                <RotateCcw className="w-5 h-5 text-[#F79E1B]" />
+                <RotateCcw className="w-4 h-4 text-[#F79E1B]" />
                 <span>GỌI LẠI</span>
               </button>
 
@@ -281,9 +281,9 @@ export default function TellerPage() {
               <button
                 disabled={!servingTicket}
                 onClick={handleComplete}
-                className="py-4 px-5 bg-white border-[2px] border-[#141413] hover:bg-[#F3F0EE] disabled:opacity-40 text-[#141413] font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2.5 transition-all transform active:scale-98 text-sm sm:text-base"
+                className="py-3 px-4 bg-white border-[1.5px] border-[#141413] hover:bg-[#F3F0EE] disabled:opacity-40 text-[#141413] font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2 transition-all transform active:scale-98 text-xs sm:text-sm"
               >
-                <CheckCircle2 className="w-5 h-5 text-[#bb302a]" />
+                <CheckCircle2 className="w-4 h-4 text-[#bb302a]" />
                 <span>HOÀN THÀNH</span>
               </button>
 
@@ -291,9 +291,9 @@ export default function TellerPage() {
               <button
                 disabled={!servingTicket}
                 onClick={handleSkip}
-                className="py-3.5 px-4 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] disabled:opacity-40 text-[#444444] font-semibold rounded-[20px] flex items-center justify-center gap-2 transition-all text-xs sm:text-sm"
+                className="py-2.5 px-3 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] disabled:opacity-40 text-[#444444] font-semibold rounded-[18px] flex items-center justify-center gap-1.5 transition-all text-xs"
               >
-                <SkipForward className="w-4 h-4 text-[#CF4500]" />
+                <SkipForward className="w-3.5 h-3.5 text-[#CF4500]" />
                 <span>Bỏ qua / Vắng</span>
               </button>
 
@@ -301,18 +301,18 @@ export default function TellerPage() {
               <button
                 disabled={!servingTicket}
                 onClick={() => setShowTransferModal(true)}
-                className="py-3.5 px-4 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] disabled:opacity-40 text-[#444444] font-semibold rounded-[20px] flex items-center justify-center gap-2 transition-all text-xs sm:text-sm"
+                className="py-2.5 px-3 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] disabled:opacity-40 text-[#444444] font-semibold rounded-[18px] flex items-center justify-center gap-1.5 transition-all text-xs"
               >
-                <ArrowRightLeft className="w-4 h-4 text-[#141413]" />
+                <ArrowRightLeft className="w-3.5 h-3.5 text-[#141413]" />
                 <span>Chuyển quầy</span>
               </button>
 
               {/* Issue Direct Ticket Button */}
               <button
                 onClick={handleDirectTicket}
-                className="py-3.5 px-4 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] text-[#444444] font-semibold rounded-[20px] flex items-center justify-center gap-2 transition-all text-xs sm:text-sm"
+                className="py-2.5 px-3 bg-white border border-[#141413]/15 hover:bg-[#F3F0EE] text-[#444444] font-semibold rounded-[18px] flex items-center justify-center gap-1.5 transition-all text-xs"
               >
-                <PlusCircle className="w-4 h-4 text-[#bb302a]" />
+                <PlusCircle className="w-3.5 h-3.5 text-[#bb302a]" />
                 <span>Cấp vé tại quầy</span>
               </button>
             </div>
@@ -320,33 +320,33 @@ export default function TellerPage() {
         </section>
 
         {/* Right Column (5 cols): Queue Management Tabs & Stats */}
-        <section className="lg:col-span-5 flex flex-col justify-between gap-5">
+        <section className="lg:col-span-5 flex flex-col justify-between gap-2.5 min-h-0 overflow-hidden">
           {/* Workstation Shift Stats */}
-          <div className="grid grid-cols-3 gap-3.5">
-            <div className="p-4 bg-[#FCFBFA] rounded-[24px] border border-[#141413]/10 text-center shadow-[0px_4px_24px_rgba(0,0,0,0.02)]">
-              <span className="text-xs text-[#696969] uppercase font-bold block mb-0.5">Đã phục vụ</span>
-              <strong className="text-2xl font-bold text-[#141413] font-mono">
+          <div className="grid grid-cols-3 gap-2.5 flex-shrink-0">
+            <div className="p-2.5 sm:p-3 bg-[#FCFBFA] rounded-[20px] border border-[#141413]/10 text-center shadow-sm">
+              <span className="text-[11px] text-[#696969] uppercase font-bold block">Đã phục vụ</span>
+              <strong className="text-xl sm:text-2xl font-bold text-[#141413] font-mono">
                 {activeCounter?.todayServedCount || 0}
               </strong>
             </div>
-            <div className="p-4 bg-[#FCFBFA] rounded-[24px] border border-[#141413]/10 text-center shadow-[0px_4px_24px_rgba(0,0,0,0.02)]">
-              <span className="text-xs text-[#696969] uppercase font-bold block mb-0.5">TG trung bình</span>
-              <strong className="text-2xl font-bold text-[#bb302a] font-mono">
+            <div className="p-2.5 sm:p-3 bg-[#FCFBFA] rounded-[20px] border border-[#141413]/10 text-center shadow-sm">
+              <span className="text-[11px] text-[#696969] uppercase font-bold block">TG trung bình</span>
+              <strong className="text-xl sm:text-2xl font-bold text-[#bb302a] font-mono">
                 {activeCounter?.avgServeMinutes || 8.5}p
               </strong>
             </div>
-            <div className="p-4 bg-[#FCFBFA] rounded-[24px] border border-[#141413]/10 text-center shadow-[0px_4px_24px_rgba(0,0,0,0.02)]">
-              <span className="text-xs text-[#696969] uppercase font-bold block mb-0.5">Đang đợi</span>
-              <strong className="text-2xl font-bold text-[#141413] font-mono">
+            <div className="p-2.5 sm:p-3 bg-[#FCFBFA] rounded-[20px] border border-[#141413]/10 text-center shadow-sm">
+              <span className="text-[11px] text-[#696969] uppercase font-bold block">Đang đợi</span>
+              <strong className="text-xl sm:text-2xl font-bold text-[#141413] font-mono">
                 {waitingTickets.length}
               </strong>
             </div>
           </div>
 
           {/* Queue Tabbed Table */}
-          <div className="bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 p-7 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex-1 flex flex-col overflow-hidden">
+          <div className="bg-[#FCFBFA] rounded-[28px] border border-[#141413]/10 p-4 sm:p-5 shadow-sm flex-1 flex flex-col min-h-0 overflow-hidden">
             {/* Tab Header */}
-            <div className="flex items-center gap-2 border-b border-[#141413]/10 pb-3.5 mb-3.5 overflow-x-auto scrollbar-none">
+            <div className="flex items-center gap-2 border-b border-[#141413]/10 pb-2.5 mb-2.5 overflow-x-auto scrollbar-none flex-shrink-0">
               <button
                 onClick={() => setActiveTab('waiting')}
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all ${

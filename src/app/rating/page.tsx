@@ -119,19 +119,19 @@ export default function RatingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F0EE] text-[#141413] flex flex-col justify-between pt-24 sm:pt-28 pb-10 px-4 sm:px-8 select-none relative overflow-hidden">
-      {/* Top Tablet Header (Stadium 40px on #FCFBFA) */}
-      <header className="relative z-10 max-w-4xl mx-auto w-full flex items-center justify-between py-4.5 px-8 bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)]">
+    <div className="h-screen max-h-screen overflow-hidden bg-[#F3F0EE] text-[#141413] flex flex-col justify-between pt-16 sm:pt-18 pb-4 px-4 sm:px-8 select-none relative">
+      {/* Top Tablet Header (Stadium 32px on #FCFBFA) */}
+      <header className="relative z-10 max-w-4xl mx-auto w-full flex items-center justify-between py-3 px-6 sm:px-8 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex-shrink-0">
         <div className="flex items-center gap-4">
-          <div className="relative flex items-center h-10">
+          <div className="relative flex items-center h-9">
             <div className="w-8 h-8 rounded-full bg-[#bb302a] opacity-95 shadow-sm" />
             <div className="w-8 h-8 rounded-full bg-[#F79E1B] opacity-90 -ml-4 mix-blend-multiply" />
           </div>
           <div>
-            <span className="eyebrow-label text-[#bb302a] block text-xs sm:text-sm font-bold">
+            <span className="eyebrow-label text-[#bb302a] block text-xs font-bold">
               • KHẢO SÁT ĐỘ HÀI LÒNG CỦA CÔNG DÂN
             </span>
-            <h1 className="text-base sm:text-xl font-bold text-[#141413]">
+            <h1 className="text-base sm:text-lg font-bold text-[#141413]">
               {activeCounter?.title || 'Quầy phục vụ'}
             </h1>
           </div>
@@ -141,9 +141,9 @@ export default function RatingPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowQrPaymentModal(true)}
-            className="flex items-center gap-1.5 px-4 py-2 bg-white border border-[#141413]/15 text-[#141413] rounded-full text-xs sm:text-sm font-semibold hover:bg-[#F3F0EE] transition-all shadow-sm"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white border border-[#141413]/15 text-[#141413] rounded-full text-xs font-semibold hover:bg-[#F3F0EE] transition-all shadow-sm"
           >
-            <CreditCard className="w-4 h-4 text-[#bb302a]" />
+            <CreditCard className="w-3.5 h-3.5 text-[#bb302a]" />
             <span>Thu phí VietQR</span>
           </button>
 
@@ -151,7 +151,7 @@ export default function RatingPage() {
             <select
               value={activeCounterId}
               onChange={(e) => setActiveCounterId(e.target.value)}
-              className="bg-white text-[#141413] font-semibold text-xs sm:text-sm px-4 py-2 rounded-full border border-[#141413]/15 cursor-pointer appearance-none pr-8 focus:outline-none shadow-sm"
+              className="bg-white text-[#141413] font-semibold text-xs px-3.5 py-1.5 rounded-full border border-[#141413]/15 cursor-pointer appearance-none pr-7 focus:outline-none shadow-sm"
             >
               {counters.map((c) => (
                 <option key={c.id} value={c.id} className="bg-[#FCFBFA] text-[#141413]">
@@ -159,53 +159,53 @@ export default function RatingPage() {
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-4 h-4 text-[#696969] absolute right-2.5 top-2.5 pointer-events-none" />
+            <ChevronDown className="w-3.5 h-3.5 text-[#696969] absolute right-2 top-2 pointer-events-none" />
           </div>
         </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="relative z-10 max-w-4xl mx-auto w-full my-6 flex-1 flex flex-col justify-center">
+      <main className="relative z-10 max-w-4xl mx-auto w-full my-auto flex-1 flex flex-col justify-center min-h-0 py-2">
         {isSubmitted ? (
-          /* Thank You Screen (Stadium 40px) */
-          <div className="bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 p-12 text-center shadow-[0px_24px_48px_rgba(0,0,0,0.06)] animate-in zoom-in-95 duration-300">
-            <div className="w-20 h-20 bg-[#bb302a]/10 text-[#bb302a] rounded-full flex items-center justify-center mx-auto mb-5 border border-[#bb302a]/20">
-              <CheckCircle2 className="w-10 h-10" />
+          /* Thank You Screen (Stadium 32px) */
+          <div className="bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 p-8 sm:p-10 text-center shadow-[0px_24px_48px_rgba(0,0,0,0.06)] animate-in zoom-in-95 duration-300">
+            <div className="w-16 h-16 bg-[#bb302a]/10 text-[#bb302a] rounded-full flex items-center justify-center mx-auto mb-3 border border-[#bb302a]/20">
+              <CheckCircle2 className="w-8 h-8" />
             </div>
-            <span className="eyebrow-label text-[#bb302a] block mb-1 text-xs sm:text-sm font-bold">
+            <span className="eyebrow-label text-[#bb302a] block mb-1 text-xs font-bold">
               • CẢM ƠN QUÝ CÔNG DÂN
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#141413] mb-3 tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#141413] mb-2 tracking-tight">
               Xin chân thành cảm ơn ý kiến đóng góp của Quý khách!
             </h2>
-            <p className="text-sm sm:text-base text-[#696969] max-w-md mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#696969] max-w-md mx-auto leading-relaxed">
               Mỗi đánh giá của Quý khách là cơ sở để chúng tôi liên tục cải tiến quy trình phục vụ ngày càng tận tâm, minh bạch và hiệu quả hơn.
             </p>
-            <div className="mt-8 inline-block px-6 py-2.5 bg-white border border-[#141413]/10 text-[#141413] rounded-full text-sm font-semibold shadow-sm">
+            <div className="mt-5 inline-block px-5 py-2 bg-white border border-[#141413]/10 text-[#141413] rounded-full text-xs font-semibold shadow-sm">
               Chúc Quý khách một ngày làm việc thuận lợi & vạn sự như ý!
             </div>
           </div>
         ) : (
-          /* Rating Form (Stadium 40px on #FCFBFA) */
-          <div className="bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 p-8 sm:p-10 shadow-[0px_24px_48px_rgba(0,0,0,0.04)]">
+          /* Rating Form (Stadium 32px on #FCFBFA) */
+          <div className="bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 p-5 sm:p-7 shadow-[0px_24px_48px_rgba(0,0,0,0.04)]">
             {/* Header context */}
-            <div className="text-center mb-6 pb-4 border-b border-[#141413]/10">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <span className="text-sm text-[#696969]">Đánh giá phiên phục vụ vé:</span>
-                <span className="font-mono font-bold text-[#bb302a] text-lg sm:text-xl">
+            <div className="text-center mb-4 pb-3 border-b border-[#141413]/10">
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <span className="text-xs text-[#696969]">Đánh giá phiên phục vụ vé:</span>
+                <span className="font-mono font-bold text-[#bb302a] text-base">
                   {activeTicket ? activeTicket.ticketNumber : 'A-101'}
                 </span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#141413] tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#141413] tracking-tight">
                 Quý công dân cảm thấy mức độ phục vụ hôm nay như thế nào?
               </h2>
-              <p className="text-sm text-[#696969] mt-2">
+              <p className="text-xs text-[#696969] mt-1">
                 Cán bộ tiếp nhận: <strong className="text-[#141413] font-bold">{activeCounter?.assignedStaff.fullName}</strong>
               </p>
             </div>
 
             {/* 5 Circular/Pill Emoji Options */}
-            <div className="grid grid-cols-5 gap-3 sm:gap-4 mb-6">
+            <div className="grid grid-cols-5 gap-2.5 sm:gap-3 mb-4">
               {RATING_OPTIONS.map((option) => {
                 const isSelected = selectedScore === option.score;
                 return (
@@ -215,16 +215,16 @@ export default function RatingPage() {
                       setSelectedScore(option.score);
                       setSelectedTags([]);
                     }}
-                    className={`py-6 px-3 rounded-[24px] border transition-all duration-200 flex flex-col items-center justify-center gap-2.5 transform active:scale-95 ${
+                    className={`py-3.5 sm:py-4 px-2 rounded-[20px] border transition-all duration-200 flex flex-col items-center justify-center gap-1.5 transform active:scale-95 ${
                       isSelected
                         ? `${option.color} scale-105 shadow-md`
                         : 'bg-[#F3F0EE] text-[#696969] border-transparent hover:bg-white hover:text-[#141413]'
                     }`}
                   >
-                    <span className="text-4xl sm:text-5xl filter drop-shadow-sm transition-transform hover:scale-110">
+                    <span className="text-3xl sm:text-4xl filter drop-shadow-sm transition-transform hover:scale-110">
                       {option.emoji}
                     </span>
-                    <span className="text-xs sm:text-sm font-bold text-center leading-tight text-[#141413]">
+                    <span className="text-[11px] sm:text-xs font-bold text-center leading-tight text-[#141413]">
                       {option.label}
                     </span>
                   </button>
@@ -233,18 +233,18 @@ export default function RatingPage() {
             </div>
 
             {/* Dynamic Reason Tags (Pill 20px radius) */}
-            <div className="mb-6 p-5 bg-[#F3F0EE] rounded-[24px] border border-[#141413]/5">
-              <span className="eyebrow-label text-[#696969] block mb-3 text-xs sm:text-sm font-bold">
+            <div className="mb-3.5 p-3.5 bg-[#F3F0EE] rounded-[20px] border border-[#141413]/5">
+              <span className="eyebrow-label text-[#696969] block mb-2 text-xs font-bold">
                 • LÝ DO QUÝ KHÁCH ĐÁNH GIÁ (CHỌN MỘT HOẶC NHIỀU TIÊU CHÍ):
               </span>
-              <div className="flex flex-wrap gap-2.5">
+              <div className="flex flex-wrap gap-2">
                 {currentOption.tags.map((tag) => {
                   const isChecked = selectedTags.includes(tag);
                   return (
                     <button
                       key={tag}
                       onClick={() => handleTagToggle(tag)}
-                      className={`px-4 sm:px-5 py-2.5 rounded-[20px] text-xs sm:text-sm font-semibold border transition-all ${
+                      className={`px-3.5 py-1.5 rounded-[16px] text-xs font-semibold border transition-all ${
                         isChecked
                           ? 'bg-[#141413] text-[#F3F0EE] border-[#141413] shadow-sm'
                           : 'bg-white text-[#141413] border-[#141413]/10 hover:border-[#141413]'
@@ -258,22 +258,22 @@ export default function RatingPage() {
             </div>
 
             {/* Optional Comment Input */}
-            <div className="mb-6">
+            <div className="mb-4">
               <textarea
                 value={feedbackText}
                 onChange={(e) => setFeedbackText(e.target.value)}
                 placeholder="Ý kiến đóng góp thêm của Quý khách (không bắt buộc)..."
                 rows={2}
-                className="w-full p-4 bg-white rounded-[20px] border border-[#141413]/15 text-sm text-[#141413] placeholder-[#696969] focus:outline-none focus:border-[#141413] resize-none"
+                className="w-full p-3 bg-white rounded-[16px] border border-[#141413]/15 text-xs sm:text-sm text-[#141413] placeholder-[#696969] focus:outline-none focus:border-[#141413] resize-none"
               />
             </div>
 
             {/* Submit Primary CTA (Ink Black Pill 20px radius) */}
             <button
               onClick={handleSubmit}
-              className="w-full py-4.5 bg-[#141413] hover:bg-[#262627] text-[#F3F0EE] font-bold rounded-[20px] shadow-sm flex items-center justify-center gap-2 text-base sm:text-lg transition-all transform active:scale-98"
+              className="w-full py-3.5 bg-[#141413] hover:bg-[#262627] text-[#F3F0EE] font-bold rounded-[18px] shadow-sm flex items-center justify-center gap-2 text-sm sm:text-base transition-all transform active:scale-98"
             >
-              <ThumbsUp className="w-5 h-5 text-[#F79E1B]" />
+              <ThumbsUp className="w-4 h-4 text-[#F79E1B]" />
               <span>GỬI ĐÁNH GIÁ Ý KIẾN</span>
             </button>
           </div>
@@ -281,8 +281,8 @@ export default function RatingPage() {
       </main>
 
       {/* Footer Disclaimer */}
-      <footer className="relative z-10 max-w-4xl mx-auto w-full text-center text-xs sm:text-sm text-[#696969] flex items-center justify-center gap-2 font-medium">
-        <ShieldCheck className="w-4 h-4 text-[#bb302a]" />
+      <footer className="relative z-10 max-w-4xl mx-auto w-full text-center text-xs text-[#696969] flex items-center justify-center gap-1.5 font-medium flex-shrink-0">
+        <ShieldCheck className="w-3.5 h-3.5 text-[#bb302a]" />
         <span>Khảo sát độc lập phục vụ đánh giá chỉ số cải cách hành chính (PAR INDEX)</span>
       </footer>
 

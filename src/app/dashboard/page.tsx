@@ -40,193 +40,189 @@ export default function DashboardPage() {
   const maxHourlyCount = Math.max(...hourlyData.map((d) => d.count));
 
   return (
-    <div className="min-h-screen bg-[#F3F0EE] text-[#141413] pt-24 sm:pt-28 pb-16 px-4 sm:px-8 relative overflow-hidden">
-      <div className="relative z-10 max-w-6xl mx-auto space-y-6">
+    <div className="h-screen max-h-screen overflow-hidden bg-[#F3F0EE] text-[#141413] pt-16 sm:pt-18 pb-3 px-4 sm:px-6 select-none relative flex flex-col justify-between">
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex-1 flex flex-col justify-between min-h-0 space-y-2.5">
         {/* Dashboard Title & Quick Launch Bar */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 py-2">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 py-1 flex-shrink-0">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white border border-[#141413]/10 rounded-full text-xs sm:text-sm font-semibold mb-2.5 shadow-sm">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#bb302a] animate-ping" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-[#141413]/10 rounded-full text-xs font-semibold mb-1 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#bb302a] animate-ping" />
               <span className="eyebrow-label text-[#bb302a] font-bold">• GIÁM SÁT THỜI GIAN THỰC</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-[#141413] tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-bold text-[#141413] tracking-tight">
               Trung tâm Giám sát & Điều hành Xếp hàng Thông minh
             </h1>
-            <p className="text-sm sm:text-base text-[#696969] mt-1">
-              Phân tích chỉ số hiệu năng (KPIs), lưu lượng công dân và mức độ hài lòng tại Trung tâm Hành chính công
-            </p>
           </div>
 
           {/* Quick Nav Pills (White pills 20px radius) */}
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2">
             <Link
               href="/kiosk"
-              className="flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs sm:text-sm font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
             >
-              <Touchpad className="w-4 h-4 text-[#bb302a]" />
+              <Touchpad className="w-3.5 h-3.5 text-[#bb302a]" />
               <span>Kiosk</span>
             </Link>
             <Link
               href="/display"
-              className="flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs sm:text-sm font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
             >
-              <Tv className="w-4 h-4 text-[#bb302a]" />
+              <Tv className="w-3.5 h-3.5 text-[#bb302a]" />
               <span>Màn hình TV</span>
             </Link>
             <Link
               href="/teller"
-              className="flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs sm:text-sm font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
             >
-              <Headphones className="w-4 h-4 text-[#bb302a]" />
+              <Headphones className="w-3.5 h-3.5 text-[#bb302a]" />
               <span>Bàn gọi số</span>
             </Link>
             <Link
               href="/counter-sign"
-              className="flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs sm:text-sm font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
             >
-              <MonitorDot className="w-4 h-4 text-[#bb302a]" />
+              <MonitorDot className="w-3.5 h-3.5 text-[#bb302a]" />
               <span>Bảng Quầy</span>
             </Link>
             <Link
               href="/rating"
-              className="flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs sm:text-sm font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-[#FCFBFA] text-[#141413] text-xs font-semibold rounded-[20px] border border-[#141413]/15 shadow-sm transition-all"
             >
-              <Sparkles className="w-4 h-4 text-[#F79E1B]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#F79E1B]" />
               <span>Tablet Đánh giá</span>
             </Link>
           </div>
         </div>
 
-        {/* 6 Key KPI Cards (Stadium 40px on #FCFBFA) */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {/* 6 Key KPI Cards (Stadium 24px on #FCFBFA) */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5 flex-shrink-0">
           {/* Total Issued */}
-          <div className="p-5 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-            <div className="w-10 h-10 rounded-full bg-[#bb302a]/10 text-[#bb302a] flex items-center justify-center mb-3">
-              <Users className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="eyebrow-label text-[#696969] block mb-1 text-xs font-bold">TỔNG VÉ HÔM NAY</span>
-              <div className="text-3xl sm:text-4xl font-bold text-[#141413] font-mono">
-                {kpis.totalIssuedToday}
+          <div className="p-3 bg-[#FCFBFA] rounded-[22px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1">
+              <span className="eyebrow-label text-[#696969] text-[11px] font-bold">TỔNG VÉ HÔM NAY</span>
+              <div className="w-7 h-7 rounded-full bg-[#bb302a]/10 text-[#bb302a] flex items-center justify-center">
+                <Users className="w-3.5 h-3.5" />
               </div>
             </div>
-            <div className="text-xs text-[#bb302a] flex items-center gap-1 mt-2.5 font-bold">
-              <TrendingUp className="w-3.5 h-3.5" />
+            <div className="text-2xl sm:text-3xl font-bold text-[#141413] font-mono leading-none my-1">
+              {kpis.totalIssuedToday}
+            </div>
+            <div className="text-[11px] text-[#bb302a] flex items-center gap-1 font-bold">
+              <TrendingUp className="w-3 h-3" />
               <span>+18.5% so với TB</span>
             </div>
           </div>
 
           {/* Currently Waiting */}
-          <div className="p-5 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-            <div className="w-10 h-10 rounded-full bg-[#F79E1B]/15 text-[#9A3A0A] flex items-center justify-center mb-3">
-              <Clock className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="eyebrow-label text-[#696969] block mb-1 text-xs font-bold">ĐANG ĐỢI TRONG HÀNG</span>
-              <div className="text-3xl sm:text-4xl font-bold text-[#141413] font-mono">
-                {kpis.currentlyWaiting}
+          <div className="p-3 bg-[#FCFBFA] rounded-[22px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1">
+              <span className="eyebrow-label text-[#696969] text-[11px] font-bold">ĐANG ĐỢI HÀNG</span>
+              <div className="w-7 h-7 rounded-full bg-[#F79E1B]/15 text-[#9A3A0A] flex items-center justify-center">
+                <Clock className="w-3.5 h-3.5" />
               </div>
             </div>
-            <span className="text-xs text-[#696969] mt-2.5 block font-semibold">Phân bổ 4 lĩnh vực</span>
+            <div className="text-2xl sm:text-3xl font-bold text-[#141413] font-mono leading-none my-1">
+              {kpis.currentlyWaiting}
+            </div>
+            <span className="text-[11px] text-[#696969] block font-semibold">Phân bổ 4 lĩnh vực</span>
           </div>
 
           {/* Currently Serving */}
-          <div className="p-5 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-            <div className="w-10 h-10 rounded-full bg-[#141413] text-[#F3F0EE] flex items-center justify-center mb-3">
-              <Headphones className="w-5 h-5 text-[#F79E1B]" />
-            </div>
-            <div>
-              <span className="eyebrow-label text-[#696969] block mb-1 text-xs font-bold">ĐANG PHỤC VỤ</span>
-              <div className="text-3xl sm:text-4xl font-bold text-[#bb302a] font-mono">
-                {kpis.currentlyServing}
+          <div className="p-3 bg-[#FCFBFA] rounded-[22px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1">
+              <span className="eyebrow-label text-[#696969] text-[11px] font-bold">ĐANG PHỤC VỤ</span>
+              <div className="w-7 h-7 rounded-full bg-[#141413] text-[#F3F0EE] flex items-center justify-center">
+                <Headphones className="w-3.5 h-3.5 text-[#F79E1B]" />
               </div>
             </div>
-            <span className="text-xs text-[#696969] mt-2.5 block font-semibold">4/4 quầy mở cửa</span>
+            <div className="text-2xl sm:text-3xl font-bold text-[#bb302a] font-mono leading-none my-1">
+              {kpis.currentlyServing}
+            </div>
+            <span className="text-[11px] text-[#696969] block font-semibold">4/4 quầy mở cửa</span>
           </div>
 
           {/* Completed */}
-          <div className="p-5 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-            <div className="w-10 h-10 rounded-full bg-[#bb302a]/10 text-[#bb302a] flex items-center justify-center mb-3">
-              <CheckCircle2 className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="eyebrow-label text-[#696969] block mb-1 text-xs font-bold">ĐÃ HOÀN TẤT</span>
-              <div className="text-3xl sm:text-4xl font-bold text-[#141413] font-mono">
-                {kpis.completedToday}
+          <div className="p-3 bg-[#FCFBFA] rounded-[22px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1">
+              <span className="eyebrow-label text-[#696969] text-[11px] font-bold">ĐÃ HOÀN TẤT</span>
+              <div className="w-7 h-7 rounded-full bg-[#bb302a]/10 text-[#bb302a] flex items-center justify-center">
+                <CheckCircle2 className="w-3.5 h-3.5" />
               </div>
             </div>
-            <span className="text-xs text-[#bb302a] font-bold mt-2.5 block">
+            <div className="text-2xl sm:text-3xl font-bold text-[#141413] font-mono leading-none my-1">
+              {kpis.completedToday}
+            </div>
+            <span className="text-[11px] text-[#bb302a] font-bold block">
               Đúng hẹn 99.1%
             </span>
           </div>
 
           {/* Avg Wait Time */}
-          <div className="p-5 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-            <div className="w-10 h-10 rounded-full bg-[#F3F0EE] text-[#141413] flex items-center justify-center mb-3">
-              <Clock className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="eyebrow-label text-[#696969] block mb-1 text-xs font-bold">THỜI GIAN CHỜ TB</span>
-              <div className="text-3xl sm:text-4xl font-bold text-[#141413] font-mono">
-                {kpis.averageWaitMinutes}p
+          <div className="p-3 bg-[#FCFBFA] rounded-[22px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1">
+              <span className="eyebrow-label text-[#696969] text-[11px] font-bold">TG CHỜ TB</span>
+              <div className="w-7 h-7 rounded-full bg-[#F3F0EE] text-[#141413] flex items-center justify-center">
+                <Clock className="w-3.5 h-3.5" />
               </div>
             </div>
-            <span className="text-xs text-[#696969] mt-2.5 block font-semibold">Mục tiêu: &lt; 10 phút</span>
+            <div className="text-2xl sm:text-3xl font-bold text-[#141413] font-mono leading-none my-1">
+              {kpis.averageWaitMinutes}p
+            </div>
+            <span className="text-[11px] text-[#696969] block font-semibold">Mục tiêu: &lt; 10p</span>
           </div>
 
           {/* Satisfaction Rate */}
-          <div className="p-5 bg-[#FCFBFA] rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
-            <div className="w-10 h-10 rounded-full bg-[#F79E1B]/15 text-[#9A3A0A] flex items-center justify-center mb-3">
-              <Star className="w-5 h-5 fill-[#F79E1B]" />
-            </div>
-            <div>
-              <span className="eyebrow-label text-[#696969] block mb-1 text-xs font-bold">CHỈ SỐ HÀI LÒNG</span>
-              <div className="text-3xl sm:text-4xl font-bold text-[#bb302a] font-mono">
-                {kpis.satisfactionRate}%
+          <div className="p-3 bg-[#FCFBFA] rounded-[22px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-1">
+              <span className="eyebrow-label text-[#696969] text-[11px] font-bold">HÀI LÒNG</span>
+              <div className="w-7 h-7 rounded-full bg-[#F79E1B]/15 text-[#9A3A0A] flex items-center justify-center">
+                <Star className="w-3.5 h-3.5 fill-[#F79E1B]" />
               </div>
             </div>
-            <span className="text-xs text-[#696969] mt-2.5 block font-semibold">Đánh giá 4-5 sao</span>
+            <div className="text-2xl sm:text-3xl font-bold text-[#bb302a] font-mono leading-none my-1">
+              {kpis.satisfactionRate}%
+            </div>
+            <span className="text-[11px] text-[#696969] block font-semibold">Đánh giá 4-5 sao</span>
           </div>
         </div>
 
         {/* Charts & Graphs Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Hourly Traffic Bar Visualizer (8 cols - Stadium 40px) */}
-          <div className="lg:col-span-8 p-7 bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)]">
-            <div className="flex items-center justify-between mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
+          {/* Hourly Traffic Bar Visualizer (8 cols - Stadium 24px) */}
+          <div className="lg:col-span-8 p-3.5 sm:p-4 bg-[#FCFBFA] rounded-[24px] border border-[#141413]/10 shadow-sm flex flex-col justify-between min-h-0">
+            <div className="flex items-center justify-between mb-1.5 flex-shrink-0">
               <div>
-                <span className="eyebrow-label text-[#bb302a] block mb-1 text-xs sm:text-sm font-bold">
+                <span className="eyebrow-label text-[#bb302a] block text-[11px] font-bold">
                   • THỐNG KÊ LƯU LƯỢNG
                 </span>
-                <h3 className="text-xl sm:text-2xl font-bold text-[#141413]">Biểu đồ Phân bổ Hồ sơ theo Khung giờ</h3>
-                <p className="text-sm text-[#696969]">Số lượng công dân giao dịch trong ngày hôm nay</p>
+                <h3 className="text-sm sm:text-base font-bold text-[#141413]">Biểu đồ Phân bổ Hồ sơ theo Khung giờ</h3>
               </div>
-              <div className="text-xs sm:text-sm text-[#696969] font-mono bg-[#F3F0EE] px-4 py-2 rounded-full font-medium">
+              <div className="text-xs text-[#696969] font-mono bg-[#F3F0EE] px-3 py-1 rounded-full font-medium">
                 Cao điểm: <strong className="text-[#bb302a] font-bold">09h30 - 10h30</strong>
               </div>
             </div>
 
             {/* Custom pure CSS bar chart with Mastercard-inspired palette */}
-            <div className="h-56 flex items-end justify-between gap-3 sm:gap-4 pt-6 px-2">
+            <div className="h-28 sm:h-32 flex items-end justify-between gap-2 pt-1 px-1">
               {hourlyData.map((d) => {
                 const heightPercent = Math.round((d.count / maxHourlyCount) * 100);
                 const isPeak = d.count >= 60;
                 return (
-                  <div key={d.hour} className="flex-1 flex flex-col items-center gap-2 group">
-                    <span className="text-xs text-[#696969] font-mono font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div key={d.hour} className="flex-1 flex flex-col items-center gap-1 group">
+                    <span className="text-[10px] text-[#696969] font-mono font-bold opacity-0 group-hover:opacity-100 transition-opacity">
                       {d.count}
                     </span>
-                    <div className="w-full bg-[#F3F0EE] rounded-t-xl h-44 flex items-end p-1">
+                    <div className="w-full bg-[#F3F0EE] rounded-t-lg h-22 sm:h-24 flex items-end p-0.5">
                       <div
                         style={{ height: `${heightPercent}%` }}
-                        className={`w-full rounded-lg transition-all duration-500 ${
+                        className={`w-full rounded-md transition-all duration-500 ${
                           isPeak
                             ? 'bg-[#bb302a] shadow-sm'
                             : 'bg-[#141413] group-hover:bg-[#bb302a]'
                         }`}
                       />
                     </div>
-                    <span className="text-xs sm:text-sm font-mono text-[#696969] whitespace-nowrap font-medium">
+                    <span className="text-[10px] sm:text-xs font-mono text-[#696969] whitespace-nowrap font-medium">
                       {d.hour}
                     </span>
                   </div>
@@ -235,30 +231,29 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Service Categories Breakdown (4 cols - Stadium 40px) */}
-          <div className="lg:col-span-4 p-7 bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+          {/* Service Categories Breakdown (4 cols - Stadium 24px) */}
+          <div className="lg:col-span-4 p-3.5 sm:p-4 bg-[#FCFBFA] rounded-[24px] border border-[#141413]/10 shadow-sm flex flex-col justify-between min-h-0">
             <div>
-              <span className="eyebrow-label text-[#bb302a] block mb-1 text-xs sm:text-sm font-bold">
+              <span className="eyebrow-label text-[#bb302a] block text-[11px] font-bold">
                 • CƠ CẤU THỦ TỤC
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#141413]">Tỷ trọng Lĩnh vực</h3>
-              <p className="text-sm text-[#696969] mb-4">Phân bổ hồ sơ theo từng danh mục dịch vụ</p>
+              <h3 className="text-sm sm:text-base font-bold text-[#141413] mb-2">Tỷ trọng Lĩnh vực</h3>
 
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {categories.map((cat, idx) => {
                   const catTickets = tickets.filter((t) => t.categoryId === cat.id);
                   const percent = Math.round((catTickets.length / (tickets.length || 1)) * 100);
                   const colors = ['bg-[#bb302a]', 'bg-[#141413]', 'bg-[#F79E1B]', 'bg-[#696969]'];
 
                   return (
-                    <div key={cat.id} className="space-y-1.5">
-                      <div className="flex justify-between text-xs sm:text-sm">
+                    <div key={cat.id} className="space-y-1">
+                      <div className="flex justify-between text-xs">
                         <span className="text-[#141413] font-semibold">{cat.name}</span>
                         <span className="text-[#696969] font-mono font-bold">
                           {catTickets.length} vé ({percent}%)
                         </span>
                       </div>
-                      <div className="w-full h-2.5 bg-[#F3F0EE] rounded-full overflow-hidden">
+                      <div className="w-full h-1.5 bg-[#F3F0EE] rounded-full overflow-hidden">
                         <div
                           style={{ width: `${percent}%` }}
                           className={`h-full ${colors[idx % colors.length]} rounded-full`}
@@ -270,10 +265,10 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-[#141413]/10 text-xs sm:text-sm text-[#696969] flex items-center justify-between">
-              <span>Trạng thái máy in vé Kiosk:</span>
-              <span className="text-[#bb302a] font-bold flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#bb302a]" />
+            <div className="mt-2 pt-2 border-t border-[#141413]/10 text-[11px] text-[#696969] flex items-center justify-between">
+              <span>Máy in vé Kiosk:</span>
+              <span className="text-[#bb302a] font-bold flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-[#bb302a]" />
                 Hoạt động tốt
               </span>
             </div>
@@ -281,74 +276,74 @@ export default function DashboardPage() {
         </div>
 
         {/* Counter Performance Table & Recent Live Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Counter Performance Table (7 cols - Stadium 40px) */}
-          <div className="lg:col-span-7 p-7 bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)]">
-            <span className="eyebrow-label text-[#bb302a] block mb-1 text-xs sm:text-sm font-bold">
-              • NĂNG SUẤT QUẦY GIAO DỊCH
-            </span>
-            <h3 className="text-xl sm:text-2xl font-bold text-[#141413] mb-1">Hiệu năng Phục vụ theo Từng Quầy</h3>
-            <p className="text-sm text-[#696969] mb-4">Chi tiết năng suất và sự hài lòng của cán bộ tiếp nhận</p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2.5 flex-1 min-h-0">
+          {/* Counter Performance Table (7 cols - Stadium 24px) */}
+          <div className="lg:col-span-7 p-3.5 sm:p-4 bg-[#FCFBFA] rounded-[24px] border border-[#141413]/10 shadow-sm flex flex-col justify-between min-h-0">
+            <div>
+              <span className="eyebrow-label text-[#bb302a] block text-[11px] font-bold">
+                • NĂNG SUẤT QUẦY GIAO DỊCH
+              </span>
+              <h3 className="text-sm sm:text-base font-bold text-[#141413] mb-1.5">Hiệu năng Phục vụ theo Từng Quầy</h3>
 
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs sm:text-sm">
-                <thead>
-                  <tr className="border-b border-[#141413]/10 text-[#696969]">
-                    <th className="pb-3.5 font-bold uppercase tracking-wider text-xs">QUẦY</th>
-                    <th className="pb-3.5 font-bold uppercase tracking-wider text-xs">CÁN BỘ TIẾP NHẬN</th>
-                    <th className="pb-3.5 font-bold uppercase tracking-wider text-xs text-center">ĐÃ PHỤC VỤ</th>
-                    <th className="pb-3.5 font-bold uppercase tracking-wider text-xs text-center">TG TRUNG BÌNH</th>
-                    <th className="pb-3.5 font-bold uppercase tracking-wider text-xs text-right">ĐÁNH GIÁ</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#141413]/5">
-                  {counters.map((c) => (
-                    <tr key={c.id} className="hover:bg-white transition-colors">
-                      <td className="py-3.5 font-bold text-[#bb302a] font-mono text-sm sm:text-base">
-                        Quầy {c.code}
-                      </td>
-                      <td className="py-3.5">
-                        <div className="font-bold text-[#141413] text-sm sm:text-base">{c.assignedStaff.fullName}</div>
-                        <div className="text-xs text-[#696969]">{c.assignedStaff.department}</div>
-                      </td>
-                      <td className="py-3.5 text-center font-mono font-bold text-[#141413] text-sm sm:text-base">
-                        {c.todayServedCount}
-                      </td>
-                      <td className="py-3.5 text-center font-mono font-bold text-[#bb302a] text-sm sm:text-base">
-                        {c.avgServeMinutes} phút
-                      </td>
-                      <td className="py-3.5 text-right">
-                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white border border-[#141413]/10 text-[#141413] font-bold shadow-sm text-xs sm:text-sm">
-                          <span className="text-[#F79E1B]">★</span> {c.assignedStaff.ratingAverage}
-                        </span>
-                      </td>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="border-b border-[#141413]/10 text-[#696969]">
+                      <th className="pb-2 font-bold uppercase tracking-wider text-[11px]">QUẦY</th>
+                      <th className="pb-2 font-bold uppercase tracking-wider text-[11px]">CÁN BỘ TIẾP NHẬN</th>
+                      <th className="pb-2 font-bold uppercase tracking-wider text-[11px] text-center">ĐÃ PHỤC VỤ</th>
+                      <th className="pb-2 font-bold uppercase tracking-wider text-[11px] text-center">TG TRUNG BÌNH</th>
+                      <th className="pb-2 font-bold uppercase tracking-wider text-[11px] text-right">ĐÁNH GIÁ</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-[#141413]/5">
+                    {counters.map((c) => (
+                      <tr key={c.id} className="hover:bg-white transition-colors">
+                        <td className="py-2 font-bold text-[#bb302a] font-mono text-xs sm:text-sm">
+                          Quầy {c.code}
+                        </td>
+                        <td className="py-2">
+                          <div className="font-bold text-[#141413] text-xs sm:text-sm">{c.assignedStaff.fullName}</div>
+                          <div className="text-[10px] text-[#696969]">{c.assignedStaff.department}</div>
+                        </td>
+                        <td className="py-2 text-center font-mono font-bold text-[#141413] text-xs sm:text-sm">
+                          {c.todayServedCount}
+                        </td>
+                        <td className="py-2 text-center font-mono font-bold text-[#bb302a] text-xs sm:text-sm">
+                          {c.avgServeMinutes} phút
+                        </td>
+                        <td className="py-2 text-right">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-[#141413]/10 text-[#141413] font-bold shadow-sm text-xs">
+                            <span className="text-[#F79E1B]">★</span> {c.assignedStaff.ratingAverage}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
-          {/* Recent Activity Audit Feed (5 cols - Stadium 40px) */}
-          <div className="lg:col-span-5 p-7 bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+          {/* Recent Activity Audit Feed (5 cols - Stadium 24px) */}
+          <div className="lg:col-span-5 p-3.5 sm:p-4 bg-[#FCFBFA] rounded-[24px] border border-[#141413]/10 shadow-sm flex flex-col justify-between min-h-0">
             <div>
-              <span className="eyebrow-label text-[#bb302a] block mb-1 text-xs sm:text-sm font-bold">
+              <span className="eyebrow-label text-[#bb302a] block text-[11px] font-bold">
                 • NHẬT KÝ THỜI GIAN THỰC
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold text-[#141413] mb-1">Sự kiện Hệ thống Gần nhất</h3>
-              <p className="text-sm text-[#696969] mb-4">Nhật ký trực tiếp các giao dịch lấy số và gọi số</p>
+              <h3 className="text-sm sm:text-base font-bold text-[#141413] mb-1.5">Sự kiện Hệ thống Gần nhất</h3>
 
-              <div className="space-y-3">
-                {recentTickets.map((t) => (
+              <div className="space-y-2">
+                {recentTickets.slice(0, 4).map((t) => (
                   <div
                     key={t.id}
-                    className="p-3.5 bg-[#F3F0EE] rounded-[20px] border border-[#141413]/5 flex items-center justify-between text-xs sm:text-sm"
+                    className="p-2 sm:p-2.5 bg-[#F3F0EE] rounded-[16px] border border-[#141413]/5 flex items-center justify-between text-xs"
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-mono font-bold text-[#141413] text-sm sm:text-base">{t.ticketNumber}</span>
+                        <span className="font-mono font-bold text-[#141413] text-xs sm:text-sm">{t.ticketNumber}</span>
                         <span
-                          className={`text-xs px-2.5 py-0.5 rounded-full font-bold ${
+                          className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
                             t.status === 'SERVING'
                               ? 'bg-[#bb302a] text-white'
                               : t.status === 'COMPLETED'
@@ -367,10 +362,10 @@ export default function DashboardPage() {
                             : 'Đã bỏ qua'}
                         </span>
                       </div>
-                      <span className="text-xs sm:text-sm text-[#696969] mt-1 block">{t.citizen.name} • {t.categoryName}</span>
+                      <span className="text-[11px] text-[#696969] mt-0.5 block">{t.citizen.name} • {t.categoryName}</span>
                     </div>
 
-                    <div className="text-right text-xs sm:text-sm text-[#696969] font-mono font-semibold">
+                    <div className="text-right text-[11px] text-[#696969] font-mono font-semibold">
                       {new Date(t.issuedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>
@@ -378,8 +373,8 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="mt-5 pt-3 border-t border-[#141413]/10 text-center">
-              <span className="text-xs sm:text-sm text-[#696969] font-medium">
+            <div className="mt-2 pt-1.5 border-t border-[#141413]/10 text-center">
+              <span className="text-[10px] text-[#696969] font-medium">
                 Tự động đồng bộ mỗi giây qua WebSocket & State Engine
               </span>
             </div>

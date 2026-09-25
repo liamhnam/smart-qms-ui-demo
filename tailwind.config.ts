@@ -38,7 +38,11 @@ export default {
       letterSpacing: {
         'tight-display': '-0.02em', // -2% letter spacing for editorial headlines
         'eyebrow': '0.04em', // +4% uppercase tracking
-      }
+      },
+      fontFamily: {
+        sans: ['var(--font-sans)', 'Be Vietnam Pro', 'sans-serif'],
+        mono: ['var(--font-mono)', 'Roboto Mono', 'monospace'],
+      },
     },
   },
   plugins: [],

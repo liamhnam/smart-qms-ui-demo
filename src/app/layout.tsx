@@ -1,16 +1,20 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Be_Vietnam_Pro, Roboto_Mono } from 'next/font/google';
 import './globals.css';
 import AppProviders from '@/components/providers/AppProviders';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+const beVietnamPro = Be_Vietnam_Pro({
+  weight: ['400', '500', '600', '700', '800'],
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-sans',
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+const robotoMono = Roboto_Mono({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-mono',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -26,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F3F0EE] text-[#141413] selection:bg-[#bb302a]/15 selection:text-[#bb302a]`}>
+      <body className={`${beVietnamPro.variable} ${robotoMono.variable} font-sans antialiased bg-[#F3F0EE] text-[#141413] selection:bg-[#bb302a]/15 selection:text-[#bb302a]`}>
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
