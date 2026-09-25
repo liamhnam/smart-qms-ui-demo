@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { useQms } from '@/context/QmsContext';
-import { Category, CitizenInfo, Ticket } from '@/types/qms';
+import { Category, CitizenInfo, Counter, Ticket } from '@/types/qms';
 import CccdScanModal from '@/components/kiosk/CccdScanModal';
 import QrAppointmentModal from '@/components/kiosk/QrAppointmentModal';
 import TicketReceiptModal from '@/components/kiosk/TicketReceiptModal';
+import SupportInfoModal from '@/components/kiosk/SupportInfoModal';
+import { playDingDongChime } from '@/utils/audio';
 import {
   Building2,
   Scale,
@@ -20,16 +22,33 @@ import {
   ShieldCheck,
   Star,
   Sparkles,
+  Phone,
+  Mail,
+  ChevronLeft,
+  Ticket as TicketIcon,
+  LayoutGrid,
+  CheckCircle2,
+  Monitor,
+  RefreshCw,
+  Home,
+  Layers,
 } from 'lucide-react';
 
 export default function KioskPage() {
-  const { categories, issueTicket } = useQms();
+  const { categories, counters, issueTicket } = useQms();
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
   const [isPriorityMode, setIsPriorityMode] = useState(false);
+
+  // Kiosk UI Mode: 'classic' (Giao diện Gốc Restyle) vs 'direct' (Giao diện Mới 1-Chạm)
+  const [kioskMode, setKioskMode] = useState<'classic' | 'direct'>('classic');
+
+  // Classic sub-screens: 'HOME' | 'CHON_QUAY' | 'CHON_DANH_MUC'
+  const [currentScreen, setCurrentScreen] = useState<'HOME' | 'CHON_QUAY' | 'CHON_DANH_MUC'>('HOME');
 
   // Modals
   const [isCccdOpen, setIsCccdOpen] = useState(false);
   const [isQrOpen, setIsQrOpen] = useState(false);
+  const [supportType, setSupportType] = useState<'phone' | 'email' | null>(null);
   const [currentIssuedTicket, setCurrentIssuedTicket] = useState<Ticket | null>(null);
 
   // Auto-updating clock
@@ -39,42 +58,51 @@ export default function KioskPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const getCategoryConfig = (id: string, iconName: string) => {
-    switch (id) {
-      case 'cat-a':
-        return {
-          icon: <Building2 className="w-10 h-10 text-[#bb302a]" />,
-          bgIcon: 'bg-[#bb302a]/10 border-[#bb302a]/20',
-          badgeColor: 'bg-[#bb302a]/10 text-[#bb302a]',
-          hoverBorder: 'hover:border-[#bb302a]',
-          accentText: 'text-[#bb302a]',
-        };
-      case 'cat-b':
-        return {
-          icon: <Scale className="w-10 h-10 text-[#9A3A0A]" />,
-          bgIcon: 'bg-[#F79E1B]/15 border-[#F79E1B]/30',
-          badgeColor: 'bg-[#F79E1B]/15 text-[#9A3A0A]',
-          hoverBorder: 'hover:border-[#F79E1B]',
-          accentText: 'text-[#9A3A0A]',
-        };
-      case 'cat-c':
-        return {
-          icon: <Briefcase className="w-10 h-10 text-[#1E3A8A]" />,
-          bgIcon: 'bg-[#1E3A8A]/10 border-[#1E3A8A]/20',
-          badgeColor: 'bg-[#1E3A8A]/10 text-[#1E3A8A]',
-          hoverBorder: 'hover:border-[#1E3A8A]',
-          accentText: 'text-[#1E3A8A]',
-        };
-      case 'cat-d':
-      default:
-        return {
-          icon: <Zap className="w-10 h-10 text-[#059669]" />,
-          bgIcon: 'bg-[#059669]/10 border-[#059669]/20',
-          badgeColor: 'bg-[#059669]/10 text-[#059669]',
-          hoverBorder: 'hover:border-[#059669]',
-          accentText: 'text-[#059669]',
-        };
+  // Handle ticket issuance with sound
+  const handleIssueTicket = (
+    categoryId: string,
+    counterTitle?: string,
+    explicitCounterId?: string
+  ) => {
+    const randomCitizenNames = [
+      'Công dân Nguyễn Văn Nam',
+      'Công dân Lê Thị Mai',
+      'Công dân Trần Hoàng Long',
+      'Công dân Phạm Thu Thảo',
+      'Công dân Vũ Minh Trí',
+      'Công dân Hoàng Đức Thịnh',
+      'Công dân Đỗ Quỳnh Nga',
+    ];
+    const citizen: CitizenInfo = {
+      name: randomCitizenNames[Math.floor(Math.random() * randomCitizenNames.length)],
+      isPriority: isPriorityMode,
+    };
+
+    try {
+      playDingDongChime();
+    } catch {
+      // Audio fallback
     }
+
+    const t = issueTicket(categoryId, citizen);
+    if (counterTitle) {
+      t.counterTitle = counterTitle;
+    }
+    if (explicitCounterId) {
+      t.counterId = explicitCounterId;
+    }
+    setCurrentIssuedTicket(t);
+  };
+
+  // Select counter in CHON_QUAY screen
+  const handleSelectCounter = (counter: Counter) => {
+    const primaryCatId = counter.categoryIds[0] || categories[0]?.id || 'cat-a';
+    handleIssueTicket(primaryCatId, counter.title, counter.id);
+  };
+
+  // Select category in CHON_DANH_MUC or direct screen
+  const handleSelectCategory = (cat: Category) => {
+    handleIssueTicket(cat.id);
   };
 
   const getCategoryTags = (id: string) => {
@@ -91,258 +119,639 @@ export default function KioskPage() {
     }
   };
 
-  const handleSelectCategory = (cat: Category) => {
-    const randomCitizenNames = [
-      'Công dân Nguyễn Văn Nam',
-      'Công dân Lê Thị Mai',
-      'Công dân Trần Hoàng Long',
-      'Công dân Phạm Thu Thảo',
-      'Công dân Vũ Minh Trí',
-    ];
-    const citizenName =
-      randomCitizenNames[Math.floor(Math.random() * randomCitizenNames.length)] +
-      (isPriorityMode ? ' (Ưu tiên)' : '');
-
-    const newTicket = issueTicket(cat.id, {
-      name: citizenName,
-      isPriority: isPriorityMode,
-    });
-
-    setCurrentIssuedTicket(newTicket);
-  };
-
-  const handleCccdScanSuccess = (citizen: CitizenInfo) => {
-    const targetCat = categories[0];
-    const newTicket = issueTicket(targetCat.id, {
-      ...citizen,
-      isPriority: isPriorityMode,
-    });
-    setCurrentIssuedTicket(newTicket);
-  };
-
-  const handleQrCheckInSuccess = (citizen: CitizenInfo, categoryId: string) => {
-    const newTicket = issueTicket(categoryId, citizen);
-    setCurrentIssuedTicket(newTicket);
-  };
-
   return (
-    <div className="h-screen max-h-screen overflow-hidden bg-[#F3F0EE] text-[#141413] flex flex-col justify-between pt-20 sm:pt-22 pb-3 px-6 sm:px-10 lg:px-12 select-none relative">
-      {/* Top Kiosk Header (Spacious, Clear Administrative Branding) */}
-      <header className="max-w-[1540px] mx-auto w-full flex items-center justify-between py-3.5 px-8 bg-white rounded-[32px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.04)] flex-shrink-0 mb-2">
-        <div className="flex items-center gap-4 text-left">
-          {/* Administrative Official Logo */}
-          <img
-            src="/logo.png"
-            alt="Logo Một Cửa Quốc Gia"
-            className="w-13 h-13 sm:w-14 sm:h-14 object-contain flex-shrink-0 drop-shadow-sm"
-          />
+    <div className="h-screen max-h-screen w-screen bg-[#F8FAFC] text-[#141413] flex flex-col justify-between overflow-hidden select-none font-sans">
+      {/* ========================================================================= */}
+      {/* 1. TOP HEADER - CHUẨN HÀNH CHÍNH CÔNG VỚI ĐỎ #bb302a & VÀNG GOLD #F79E1B */}
+      {/* ========================================================================= */}
+      <header className="bg-white border-b-4 border-[#bb302a] shadow-sm px-6 py-2.5 flex items-center justify-between flex-shrink-0 z-20">
+        {/* Left: Official Emblem & Unit Title */}
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-white p-1 border border-[#141413]/10 shadow-xs flex items-center justify-center flex-shrink-0">
+            <img
+              src="/logo.png"
+              alt="Logo Một Cửa Nghĩa Hưng"
+              className="w-12 h-12 object-contain"
+            />
+          </div>
           <div>
-            <span className="text-xs sm:text-sm font-bold text-[#bb302a] tracking-wider uppercase block">
-              • BỘ PHẬN TIẾP NHẬN & TRẢ KẾT QUẢ MỘT CỬA
-            </span>
-            <h1 className="text-xl sm:text-2xl lg:text-[26px] font-extrabold text-[#141413] tracking-tight">
-              Trung tâm Phục vụ Hành chính công
+            <div className="text-[12px] font-bold text-[#bb302a] uppercase tracking-wider flex items-center gap-2">
+              <span>UBND TỈNH NAM ĐỊNH • TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG</span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#bb302a]" />
+              <span className="text-[#696969] font-normal normal-case">Hệ thống Lấy số Thứ tự Điện tử</span>
+            </div>
+            <h1 className="text-xl font-extrabold text-[#141413] uppercase tracking-tight leading-tight mt-0.5">
+              BỘ PHẬN TIẾP NHẬN VÀ TRẢ KẾT QUẢ XÃ NGHĨA HƯNG
             </h1>
           </div>
         </div>
 
-        {/* Priority Toggle & Live Digital Clock */}
-        <div className="flex items-center gap-4 sm:gap-6">
-          {/* Priority Mode Toggle Button (Large, Highly Visible) */}
+        {/* Center / Right: UI Mode Switcher & Utilities */}
+        <div className="flex items-center gap-3">
+          {/* Mode Switcher Toggle Pill */}
+          <div className="bg-[#F3F0EE] p-1 rounded-2xl border border-[#141413]/10 flex items-center gap-1 shadow-inner">
+            <button
+              onClick={() => {
+                setKioskMode('classic');
+                setCurrentScreen('HOME');
+              }}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                kioskMode === 'classic'
+                  ? 'bg-[#bb302a] text-white shadow-sm'
+                  : 'text-[#696969] hover:text-[#141413]'
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>Giao diện Gốc Restyle</span>
+            </button>
+            <button
+              onClick={() => setKioskMode('direct')}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                kioskMode === 'direct'
+                  ? 'bg-[#bb302a] text-white shadow-sm'
+                  : 'text-[#696969] hover:text-[#141413]'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Giao diện Mới 1-Chạm</span>
+            </button>
+          </div>
+
+          {/* Priority Toggle Button */}
           <button
             onClick={() => setIsPriorityMode(!isPriorityMode)}
-            className={`px-5 sm:px-6 py-2.5 min-h-[50px] rounded-full text-xs sm:text-sm font-bold transition-all flex items-center gap-2.5 shadow-sm active:scale-95 touch-manipulation ${
+            className={`min-h-[46px] px-4 py-2 rounded-2xl font-bold text-xs tracking-tight transition-all flex items-center gap-2 border touch-manipulation active:scale-95 ${
               isPriorityMode
-                ? 'bg-[#bb302a] text-white ring-4 ring-[#bb302a]/25 shadow-md'
-                : 'bg-[#FCFBFA] border-2 border-[#141413]/20 hover:border-[#bb302a] text-[#141413]'
+                ? 'bg-[#F79E1B] text-[#141413] border-[#F79E1B] shadow-md ring-2 ring-[#F79E1B]/30'
+                : 'bg-white text-[#696969] border-[#141413]/15 hover:border-[#F79E1B] hover:text-[#141413]'
             }`}
           >
-            {isPriorityMode ? (
-              <>
-                <Star className="w-5 h-5 text-[#F79E1B] fill-[#F79E1B]" />
-                <span>CHẾ ĐỘ ƯU TIÊN: ĐANG BẬT</span>
-              </>
-            ) : (
-              <>
-                <HeartHandshake className="w-5 h-5 text-[#bb302a]" />
-                <span>Đối tượng Ưu tiên? (Người già, Khuyết tật, Mang thai)</span>
-              </>
-            )}
+            <HeartHandshake className="w-4 h-4 text-[#bb302a]" />
+            <span>Ưu tiên Người già / Bầu:</span>
+            <span
+              className={`px-2 py-0.5 rounded-full text-[11px] font-extrabold ${
+                isPriorityMode ? 'bg-[#141413] text-[#F79E1B]' : 'bg-[#F3F0EE] text-[#696969]'
+              }`}
+            >
+              {isPriorityMode ? 'ĐANG BẬT' : 'TẮT'}
+            </span>
           </button>
 
-          {/* Clock */}
-          <div className="text-right hidden sm:block pl-2 border-l border-[#141413]/10">
-            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-[#141413] tracking-tight">
-              {currentTime
-                ? currentTime.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-                : '--:--:--'}
-            </div>
-            <div className="text-xs text-[#696969] font-semibold">
-              {currentTime
-                ? currentTime.toLocaleDateString('vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' })
-                : ''}
+          {/* Live Server Digital Clock */}
+          <div className="bg-[#F8FAFC] border border-[#141413]/10 px-4 py-1.5 rounded-2xl flex items-center gap-2.5 shadow-xs">
+            <Clock className="w-4 h-4 text-[#bb302a]" />
+            <div className="text-right">
+              <div className="text-sm font-bold font-mono text-[#141413] leading-none">
+                {currentTime
+                  ? currentTime.toLocaleTimeString('vi-VN', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit',
+                    })
+                  : '--:--:--'}
+              </div>
+              <div className="text-[10px] text-[#696969] font-medium mt-0.5 leading-none capitalize">
+                {currentTime
+                  ? currentTime.toLocaleDateString('vi-VN', {
+                      weekday: 'short',
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                    })
+                  : '--'}
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Kiosk Body - 4 Grand Touch Cards filling horizontal canvas */}
-      <main className="max-w-[1540px] mx-auto w-full my-auto flex-1 flex flex-col justify-center min-h-0 py-1.5">
-        <div className="text-center mb-3 flex-shrink-0">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white rounded-full border border-[#141413]/10 text-xs sm:text-sm text-[#555555] font-semibold mb-1 shadow-sm">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#bb302a] animate-ping" />
-            <span>Chạm trực tiếp vào ô lĩnh vực bên dưới để nhận phiếu số thứ tự</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-extrabold text-[#141413] tracking-tight">
-            Quý công dân cần giải quyết thủ tục nào?
-          </h2>
-        </div>
+      {/* ========================================================================= */}
+      {/* 2. MAIN BODY AREA (CHUYỂN ĐỔI THEO MODE VÀ THEO SUB-SCREEN)               */}
+      {/* ========================================================================= */}
+      <main className="flex-1 flex flex-col justify-between p-5 max-w-[1600px] w-full mx-auto overflow-hidden">
+        {/* MODE A: GIAO DIỆN GỐC RESTYLE (BỐ CỤC CHUẨN CỦA DỰ ÁN GỐC QMS) */}
+        {kioskMode === 'classic' && (
+          <>
+            {/* SUB-SCREEN 1: TRANG CHỦ LẤY SỐ (/lay-so) */}
+            {currentScreen === 'HOME' && (
+              <div className="flex-1 flex flex-col justify-between space-y-4">
+                {/* Title Section */}
+                <div className="text-center pt-2 pb-1 flex-shrink-0">
+                  <span className="inline-block px-4 py-1 bg-[#bb302a]/10 text-[#bb302a] text-xs font-bold rounded-full mb-1.5 tracking-wider uppercase">
+                    Hệ thống Kiosk Một cửa Thông minh
+                  </span>
+                  <h2 className="text-3xl font-extrabold text-[#141413] tracking-tight">
+                    Chào mừng Quý khách đến với Hệ thống Lấy số Thứ tự
+                  </h2>
+                  <p className="text-base text-[#696969] mt-1 font-medium">
+                    Vui lòng chạm chọn phương thức lấy số phù hợp trên màn hình cảm ứng
+                  </p>
+                </div>
 
-        {/* 4 Grand Service Touch Cards (Grid 2x2, Spacious & High Contrast) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 flex-1 min-h-0">
-          {categories.map((cat) => {
-            const config = getCategoryConfig(cat.id, cat.iconName);
-            return (
-              <div
-                key={cat.id}
-                onClick={() => handleSelectCategory(cat)}
-                className={`group relative cursor-pointer bg-white active:bg-[#FAF8F6] active:scale-[0.985] rounded-[32px] p-5 sm:p-6 border-2 border-[#141413]/10 ${config.hoverBorder} shadow-[0px_8px_32px_rgba(0,0,0,0.04)] hover:shadow-[0px_20px_48px_rgba(0,0,0,0.08)] transition-all duration-200 flex flex-col justify-between touch-manipulation select-none overflow-hidden`}
-              >
-                {/* Top Part: Icon & Code Badges */}
-                <div className="flex items-start gap-4 sm:gap-5">
-                  {/* Category Circular Emblem Icon */}
+                {/* 3 Main Action Cards (Touch Ergonomic for 22-24 inch) */}
+                <div className="grid grid-cols-3 gap-6 flex-1 items-stretch py-2 min-h-0">
+                  {/* Card 1: LẤY SỐ THEO QUẦY */}
                   <div
-                    className={`w-18 h-18 sm:w-20 sm:h-20 rounded-full ${config.bgIcon} border flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform shadow-inner`}
+                    onClick={() => setCurrentScreen('CHON_QUAY')}
+                    className="group bg-white rounded-[32px] p-8 border-2 border-[#141413]/10 hover:border-[#bb302a] shadow-md hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden active:scale-[0.99] touch-manipulation"
                   >
-                    {config.icon}
-                  </div>
+                    {/* Top colored accent bar */}
+                    <div className="absolute top-0 left-0 right-0 h-3 bg-[#bb302a]" />
 
-                  {/* Service Title & Info */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className={`text-xs sm:text-sm font-bold tracking-wider uppercase ${config.accentText}`}>
-                        • LĨNH VỰC {cat.prefix}
-                      </span>
-                      <span className="text-xs sm:text-sm font-mono font-bold text-[#141413] bg-[#F3F0EE] px-3.5 py-1 rounded-full border border-[#141413]/5">
-                        Số đang gọi: {cat.prefix}-{String(cat.currentNumber).padStart(3, '0')}
-                      </span>
+                    {/* Top row: Icon + Arrow */}
+                    <div className="flex items-center justify-between mt-1">
+                      <div className="w-20 h-20 rounded-3xl bg-[#bb302a]/10 border border-[#bb302a]/20 flex items-center justify-center text-[#bb302a] group-hover:scale-105 transition-transform">
+                        <TicketIcon className="w-10 h-10" />
+                      </div>
+                      <div className="w-12 h-12 rounded-full bg-[#F3F0EE] group-hover:bg-[#bb302a] group-hover:text-white text-[#696969] flex items-center justify-center transition-colors">
+                        <ArrowRight className="w-6 h-6" />
+                      </div>
                     </div>
 
-                    <h3 className="text-xl sm:text-2xl font-extrabold text-[#141413] group-hover:text-[#bb302a] transition-colors leading-snug">
-                      {cat.name}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-[#555555] mt-1 leading-relaxed">
-                      {cat.description}
-                    </p>
+                    {/* Middle: Content */}
+                    <div className="my-auto py-4">
+                      <div className="text-xs font-bold text-[#bb302a] uppercase tracking-wider">
+                        Phương thức truyền thống
+                      </div>
+                      <h3 className="text-2xl font-black text-[#141413] group-hover:text-[#bb302a] transition-colors mt-1">
+                        LẤY SỐ THEO QUẦY
+                      </h3>
+                      <p className="text-sm text-[#696969] font-medium leading-relaxed mt-2">
+                        Đăng ký lấy số thứ tự phục vụ trực tiếp tại các quầy giao dịch chuyên môn
+                      </p>
+                    </div>
 
-                    {/* Popular Sub-Procedure Tags */}
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2.5">
-                      {getCategoryTags(cat.id).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2.5 py-1 bg-[#F3F0EE] group-hover:bg-[#F3EDE8] text-[#444444] rounded-full text-[11px] sm:text-xs font-semibold border border-[#141413]/5 transition-colors"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                    {/* Bottom: Action badge */}
+                    <div className="pt-4 border-t border-[#141413]/10 flex items-center justify-between">
+                      <span className="text-xs font-bold text-[#696969]">
+                        {counters.length} quầy đang sẵn sàng
+                      </span>
+                      <span className="px-4 py-2 bg-[#bb302a] text-white rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 group-hover:bg-[#a12822] transition-colors">
+                        <span>Chọn quầy ngay</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Card 2: CHỌN THEO DANH MỤC */}
+                  <div
+                    onClick={() => setCurrentScreen('CHON_DANH_MUC')}
+                    className="group bg-white rounded-[32px] p-8 border-2 border-[#141413]/10 hover:border-[#F79E1B] shadow-md hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden active:scale-[0.99] touch-manipulation"
+                  >
+                    {/* Top colored accent bar */}
+                    <div className="absolute top-0 left-0 right-0 h-3 bg-[#F79E1B]" />
+
+                    {/* Top row: Icon + Arrow */}
+                    <div className="flex items-center justify-between mt-1">
+                      <div className="w-20 h-20 rounded-3xl bg-[#F79E1B]/15 border border-[#F79E1B]/30 flex items-center justify-center text-[#9A3A0A] group-hover:scale-105 transition-transform">
+                        <LayoutGrid className="w-10 h-10" />
+                      </div>
+                      <div className="w-12 h-12 rounded-full bg-[#F3F0EE] group-hover:bg-[#F79E1B] group-hover:text-[#141413] text-[#696969] flex items-center justify-center transition-colors">
+                        <ArrowRight className="w-6 h-6" />
+                      </div>
+                    </div>
+
+                    {/* Middle: Content */}
+                    <div className="my-auto py-4">
+                      <div className="text-xs font-bold text-[#9A3A0A] uppercase tracking-wider">
+                        Phân loại lĩnh vực DVC
+                      </div>
+                      <h3 className="text-2xl font-black text-[#141413] group-hover:text-[#9A3A0A] transition-colors mt-1">
+                        CHỌN DANH MỤC
+                      </h3>
+                      <p className="text-sm text-[#696969] font-medium leading-relaxed mt-2">
+                        Chọn danh mục dịch vụ (Đất đai, Hộ tịch, Kinh doanh, Hồ sơ nhanh) để lấy số
+                      </p>
+                    </div>
+
+                    {/* Bottom: Action badge */}
+                    <div className="pt-4 border-t border-[#141413]/10 flex items-center justify-between">
+                      <span className="text-xs font-bold text-[#696969]">
+                        {categories.length} nhóm thủ tục hành chính
+                      </span>
+                      <span className="px-4 py-2 bg-[#F79E1B] text-[#141413] rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 group-hover:bg-[#e08c14] transition-colors">
+                        <span>Xem danh mục</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Card 3: NHẬN SỐ HẸN ONLINE / QR */}
+                  <div
+                    onClick={() => setIsQrOpen(true)}
+                    className="group bg-white rounded-[32px] p-8 border-2 border-[#141413]/10 hover:border-[#059669] shadow-md hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden active:scale-[0.99] touch-manipulation"
+                  >
+                    {/* Top colored accent bar */}
+                    <div className="absolute top-0 left-0 right-0 h-3 bg-[#059669]" />
+
+                    {/* Top row: Icon + Arrow */}
+                    <div className="flex items-center justify-between mt-1">
+                      <div className="w-20 h-20 rounded-3xl bg-[#059669]/10 border border-[#059669]/20 flex items-center justify-center text-[#059669] group-hover:scale-105 transition-transform">
+                        <QrCode className="w-10 h-10" />
+                      </div>
+                      <div className="w-12 h-12 rounded-full bg-[#F3F0EE] group-hover:bg-[#059669] group-hover:text-white text-[#696969] flex items-center justify-center transition-colors">
+                        <ArrowRight className="w-6 h-6" />
+                      </div>
+                    </div>
+
+                    {/* Middle: Content */}
+                    <div className="my-auto py-4">
+                      <div className="text-xs font-bold text-[#059669] uppercase tracking-wider">
+                        Dịch vụ công trực tuyến
+                      </div>
+                      <h3 className="text-2xl font-black text-[#141413] group-hover:text-[#059669] transition-colors mt-1">
+                        NHẬN SỐ ONLINE
+                      </h3>
+                      <p className="text-sm text-[#696969] font-medium leading-relaxed mt-2">
+                        Quét mã QR hoặc nhập mã đặt hẹn trước qua Cổng DVC Quốc gia / Zalo Mini App
+                      </p>
+                    </div>
+
+                    {/* Bottom: Action badge */}
+                    <div className="pt-4 border-t border-[#141413]/10 flex items-center justify-between">
+                      <span className="text-xs font-bold text-[#696969]">
+                        Ưu tiên phục vụ theo giờ hẹn
+                      </span>
+                      <span className="px-4 py-2 bg-[#059669] text-white rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5 group-hover:bg-[#047857] transition-colors">
+                        <span>Quét QR nhận vé</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
                     </div>
                   </div>
                 </div>
 
-                {/* Bottom Status Bar & Prominent Touch Action CTA */}
-                <div className="mt-3 pt-3 border-t border-[#141413]/10 flex items-center justify-between">
-                  <div className="flex items-center gap-5 text-xs sm:text-sm text-[#555555]">
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4 text-[#bb302a]" />
-                      <span>Đang chờ: <strong className="text-[#141413] font-bold text-sm sm:text-base">{cat.waitingCount} người</strong></span>
+                {/* Support Information Container (Chuẩn khối Thông tin hỗ trợ của bản gốc) */}
+                <div className="bg-white rounded-[26px] p-4 border border-[#141413]/10 shadow-xs flex items-center justify-between gap-4 flex-shrink-0">
+                  <div className="flex items-center gap-3 pl-2">
+                    <div className="w-10 h-10 rounded-xl bg-[#bb302a]/10 text-[#bb302a] flex items-center justify-center">
+                      <ShieldCheck className="w-5 h-5" />
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-[#bb302a]" />
-                      <span>Dự kiến: <strong className="text-[#141413] font-bold text-sm sm:text-base">~{cat.waitingCount * cat.averageWaitMinutes}p</strong></span>
+                    <div>
+                      <h4 className="text-sm font-bold text-[#141413]">Thông tin hỗ trợ công dân</h4>
+                      <p className="text-xs text-[#696969] font-medium">
+                        Cần hướng dẫn thủ tục hoặc gặp sự cố khi lấy số? Chọn một trong các hỗ trợ sau:
+                      </p>
                     </div>
                   </div>
 
-                  {/* Prominent Touch CTA Button */}
-                  <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#141413] group-hover:bg-[#bb302a] group-active:bg-[#93231e] text-white rounded-full font-bold text-xs sm:text-sm shadow-md transition-all group-hover:translate-x-1">
-                    <span>Chạm lấy số</span>
-                    <ArrowRight className="w-4 h-4" />
+                  {/* Support Option Buttons */}
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setSupportType('phone')}
+                      className="min-h-[46px] px-5 py-2.5 bg-[#F8FAFC] hover:bg-[#F3F0EE] active:scale-95 border border-[#141413]/10 text-[#141413] rounded-2xl text-xs font-bold flex items-center gap-2 transition-all touch-manipulation shadow-xs"
+                    >
+                      <Phone className="w-4 h-4 text-[#bb302a]" />
+                      <span>Cán bộ hỗ trợ</span>
+                    </button>
+
+                    <button
+                      onClick={() => setSupportType('email')}
+                      className="min-h-[46px] px-5 py-2.5 bg-[#F8FAFC] hover:bg-[#F3F0EE] active:scale-95 border border-[#141413]/10 text-[#141413] rounded-2xl text-xs font-bold flex items-center gap-2 transition-all touch-manipulation shadow-xs"
+                    >
+                      <Mail className="w-4 h-4 text-[#F79E1B]" />
+                      <span>Email hỗ trợ</span>
+                    </button>
+
+                    <button
+                      onClick={() => setIsCccdOpen(true)}
+                      className="min-h-[46px] px-5 py-2.5 bg-[#bb302a] hover:bg-[#a12822] active:scale-95 text-white rounded-2xl text-xs font-bold flex items-center gap-2 transition-all touch-manipulation shadow-sm"
+                    >
+                      <CreditCard className="w-4 h-4 text-[#F79E1B]" />
+                      <span>Quét CCCD gắn chip</span>
+                    </button>
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            )}
+
+            {/* SUB-SCREEN 2: MÀN HÌNH CHỌN QUẦY (/lay-so/chon-quay) */}
+            {currentScreen === 'CHON_QUAY' && (
+              <div className="flex-1 flex flex-col justify-between space-y-3">
+                {/* Top Nav: Back to Home + Screen Title */}
+                <div className="flex items-center justify-between pb-1 border-b border-[#141413]/10 flex-shrink-0">
+                  <button
+                    onClick={() => setCurrentScreen('HOME')}
+                    className="min-h-[50px] px-6 py-2.5 bg-white hover:bg-[#F3F0EE] active:scale-95 border-2 border-[#141413]/15 hover:border-[#bb302a] text-[#141413] font-bold rounded-2xl text-sm flex items-center gap-2.5 transition-all shadow-xs touch-manipulation"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-[#bb302a]" />
+                    <span>Quay lại Trang chủ</span>
+                  </button>
+
+                  <div className="text-center">
+                    <h2 className="text-2xl font-extrabold text-[#bb302a] uppercase tracking-tight">
+                      VUI LÒNG CHỌN QUẦY PHỤC VỤ
+                    </h2>
+                    <p className="text-xs text-[#696969] font-medium mt-0.5">
+                      Chạm vào ô quầy tương ứng với lĩnh vực thủ tục Quý khách cần giải quyết
+                    </p>
+                  </div>
+
+                  <div className="w-[180px] text-right">
+                    <span className="text-xs font-bold text-[#696969] bg-white px-3 py-1.5 rounded-xl border border-[#141413]/10">
+                      Tổng số: {counters.length} Quầy
+                    </span>
+                  </div>
+                </div>
+
+                {/* 6-Counter Grid (2 rows x 3 cols or 3 cols x 2 rows) */}
+                <div className="grid grid-cols-3 gap-5 flex-1 items-stretch py-1 min-h-0">
+                  {counters.map((c) => (
+                    <div
+                      key={c.id}
+                      onClick={() => handleSelectCounter(c)}
+                      className="group bg-white rounded-[28px] p-6 border-2 border-[#141413]/10 hover:border-[#bb302a] shadow-sm hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden active:scale-[0.98] touch-manipulation"
+                    >
+                      {/* Top Badges */}
+                      <div className="flex items-center justify-between">
+                        <div className="px-3.5 py-1.5 rounded-xl bg-[#bb302a] text-white text-xs font-extrabold tracking-wide uppercase shadow-xs">
+                          {c.code ? `Quầy số ${c.code}` : c.title}
+                        </div>
+                        <div className="px-3 py-1 rounded-xl bg-[#059669]/10 text-[#059669] text-xs font-bold flex items-center gap-1.5 border border-[#059669]/20">
+                          <span className="w-2 h-2 rounded-full bg-[#059669] animate-pulse" />
+                          <span>Đang hoạt động</span>
+                        </div>
+                      </div>
+
+                      {/* Main Center Content */}
+                      <div className="my-auto py-2">
+                        <h3 className="text-xl font-black text-[#141413] group-hover:text-[#bb302a] transition-colors leading-snug">
+                          {c.title}
+                        </h3>
+                        <p className="text-xs text-[#696969] mt-1.5 font-medium flex items-center gap-2">
+                          <span className="text-[#141413] font-bold">Cán bộ:</span>
+                          <span>{c.assignedStaff?.fullName || 'Chuyên viên tiếp nhận'}</span>
+                        </p>
+                      </div>
+
+                      {/* Bottom Info & Touch Action */}
+                      <div className="pt-3 border-t border-[#141413]/10 flex items-center justify-between">
+                        <div className="text-xs text-[#696969] font-medium flex items-center gap-1.5">
+                          <Users className="w-4 h-4 text-[#bb302a]" />
+                          <span>Chờ: ~{c.todayServedCount > 20 ? 3 : 1} người</span>
+                        </div>
+                        <div className="px-4 py-2 bg-[#141413] group-hover:bg-[#bb302a] text-white rounded-xl text-xs font-bold transition-colors shadow-xs flex items-center gap-1.5">
+                          <span>Chạm lấy số</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* SUB-SCREEN 3: MÀN HÌNH CHỌN DANH MỤC (/lay-so/chon-danh-muc) */}
+            {currentScreen === 'CHON_DANH_MUC' && (
+              <div className="flex-1 flex flex-col justify-between space-y-3">
+                {/* Top Nav */}
+                <div className="flex items-center justify-between pb-1 border-b border-[#141413]/10 flex-shrink-0">
+                  <button
+                    onClick={() => setCurrentScreen('HOME')}
+                    className="min-h-[50px] px-6 py-2.5 bg-white hover:bg-[#F3F0EE] active:scale-95 border-2 border-[#141413]/15 hover:border-[#bb302a] text-[#141413] font-bold rounded-2xl text-sm flex items-center gap-2.5 transition-all shadow-xs touch-manipulation"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-[#bb302a]" />
+                    <span>Quay lại Trang chủ</span>
+                  </button>
+
+                  <div className="text-center">
+                    <h2 className="text-2xl font-extrabold text-[#bb302a] uppercase tracking-tight">
+                      VUI LÒNG CHỌN DANH MỤC DỊCH VỤ CÔNG
+                    </h2>
+                    <p className="text-xs text-[#696969] font-medium mt-0.5">
+                      Chạm vào nhóm lĩnh vực thủ tục hành chính để cấp số thứ tự tương ứng
+                    </p>
+                  </div>
+
+                  <div className="w-[180px] text-right">
+                    <span className="text-xs font-bold text-[#696969] bg-white px-3 py-1.5 rounded-xl border border-[#141413]/10">
+                      {categories.length} Nhóm lĩnh vực
+                    </span>
+                  </div>
+                </div>
+
+                {/* 4 Category Cards Grid */}
+                <div className="grid grid-cols-2 gap-5 flex-1 items-stretch py-1 min-h-0">
+                  {categories.map((cat) => (
+                    <div
+                      key={cat.id}
+                      onClick={() => handleSelectCategory(cat)}
+                      className="group bg-white rounded-[28px] p-6 border-2 border-[#141413]/10 hover:border-[#bb302a] shadow-sm hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden active:scale-[0.98] touch-manipulation"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-14 h-14 rounded-2xl bg-[#bb302a]/10 border border-[#bb302a]/20 flex items-center justify-center text-[#bb302a]">
+                            <LayoutGrid className="w-7 h-7" />
+                          </div>
+                          <div>
+                            <span className="text-[11px] font-bold text-[#bb302a] uppercase tracking-wider">
+                              Nhóm {cat.prefix}
+                            </span>
+                            <h3 className="text-xl font-black text-[#141413] group-hover:text-[#bb302a] transition-colors leading-tight">
+                              {cat.name}
+                            </h3>
+                          </div>
+                        </div>
+
+                        <div className="px-3 py-1 bg-[#F3F0EE] rounded-xl text-xs font-bold font-mono text-[#696969]">
+                          Đang chờ: {cat.waitingCount}
+                        </div>
+                      </div>
+
+                      {/* Description & tags */}
+                      <p className="text-xs text-[#696969] font-medium my-2">
+                        {cat.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 my-1">
+                        {getCategoryTags(cat.id).map((tag, i) => (
+                          <span
+                            key={i}
+                            className="px-2.5 py-1 bg-[#F8FAFC] border border-[#141413]/10 rounded-lg text-[11px] text-[#141413] font-medium"
+                          >
+                            • {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Action Button */}
+                      <div className="pt-3 border-t border-[#141413]/10 flex items-center justify-between">
+                        <span className="text-xs text-[#696969] font-medium">
+                          Thời gian chờ ước tính: ~{cat.averageWaitMinutes * (cat.waitingCount + 1)} phút
+                        </span>
+                        <div className="px-4 py-2 bg-[#bb302a] text-white rounded-xl text-xs font-bold transition-colors shadow-xs flex items-center gap-1.5">
+                          <span>Chạm lấy số ngay</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* MODE B: GIAO DIỆN MỚI 1-CHẠM (HIỂN THỊ TRỰC TIẾP TRÊN TRANG CHỦ) */}
+        {kioskMode === 'direct' && (
+          <div className="flex-1 flex flex-col justify-between space-y-3">
+            {/* Title Section */}
+            <div className="text-center pt-1 pb-1 flex-shrink-0">
+              <span className="inline-block px-3 py-0.5 bg-[#bb302a]/10 text-[#bb302a] text-xs font-bold rounded-full mb-1 tracking-wider uppercase">
+                Giao diện Cảm ứng 1-Chạm Hiện đại
+              </span>
+              <h2 className="text-2xl font-extrabold text-[#141413] tracking-tight">
+                Chạm vào Lĩnh vực cần nộp hồ sơ để In Phiếu Thứ tự
+              </h2>
+            </div>
+
+            {/* Direct 4-Box Grid with Procedures */}
+            <div className="grid grid-cols-2 gap-5 flex-1 items-stretch py-1 min-h-0">
+              {categories.map((cat) => (
+                <div
+                  key={cat.id}
+                  onClick={() => handleSelectCategory(cat)}
+                  className="group bg-white rounded-[28px] p-6 border-2 border-[#141413]/10 hover:border-[#bb302a] shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between relative overflow-hidden active:scale-[0.98] touch-manipulation"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-14 h-14 rounded-2xl bg-[#bb302a]/10 border border-[#bb302a]/20 flex items-center justify-center text-[#bb302a]">
+                        <Building2 className="w-7 h-7" />
+                      </div>
+                      <div>
+                        <span className="text-[11px] font-bold text-[#bb302a] uppercase tracking-wider">
+                          Lĩnh vực {cat.prefix}
+                        </span>
+                        <h3 className="text-xl font-black text-[#141413] group-hover:text-[#bb302a] transition-colors leading-tight">
+                          {cat.name}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <div className="px-3.5 py-1 bg-[#F3F0EE] rounded-xl text-xs font-bold font-mono text-[#696969]">
+                      Chờ: {cat.waitingCount} người
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-[#696969] font-medium my-2">{cat.description}</p>
+
+                  {/* Procedures Tag Grid */}
+                  <div className="grid grid-cols-2 gap-2 my-2">
+                    {getCategoryTags(cat.id).map((tag, idx) => (
+                      <div
+                        key={idx}
+                        className="px-3 py-2 bg-[#F8FAFC] border border-[#141413]/10 rounded-xl text-xs text-[#141413] font-semibold flex items-center gap-2 group-hover:border-[#bb302a]/30 transition-colors"
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#bb302a] flex-shrink-0" />
+                        <span className="truncate">{tag}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Action Pill */}
+                  <div className="pt-3 border-t border-[#141413]/10 flex items-center justify-between">
+                    <span className="text-xs text-[#696969] font-medium">
+                      Ước tính phục vụ: ~{cat.averageWaitMinutes} phút/lượt
+                    </span>
+                    <div className="px-5 py-2.5 bg-[#bb302a] text-white rounded-xl text-xs font-bold shadow-xs flex items-center gap-2 group-hover:bg-[#a12822] transition-colors">
+                      <span>CHẠM LẤY SỐ NGAY</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Quick Action Bar for Direct Mode */}
+            <div className="flex items-center justify-between gap-4 bg-white p-3 rounded-2xl border border-[#141413]/10 flex-shrink-0">
+              <div className="text-xs text-[#696969] font-medium pl-2">
+                Hỗ trợ thêm: Quét CCCD hoặc Quét mã hẹn QR đặt trước
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsCccdOpen(true)}
+                  className="px-4 py-2 bg-[#F8FAFC] hover:bg-[#F3F0EE] border border-[#141413]/15 text-[#141413] rounded-xl text-xs font-bold flex items-center gap-2"
+                >
+                  <CreditCard className="w-4 h-4 text-[#bb302a]" />
+                  <span>Quét CCCD</span>
+                </button>
+                <button
+                  onClick={() => setIsQrOpen(true)}
+                  className="px-4 py-2 bg-[#059669] text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-xs"
+                >
+                  <QrCode className="w-4 h-4" />
+                  <span>Quét QR Hẹn</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
 
-      {/* Alternative Entry Options (CCCD Chip & Online QR Check-in) */}
-      <footer className="max-w-[1540px] mx-auto w-full flex-shrink-0 pt-2">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Scan CCCD Chip Card (Touchscreen Ergonomic Grand Button) */}
-          <button
-            onClick={() => setIsCccdOpen(true)}
-            className="flex items-center justify-center gap-5 py-3.5 sm:py-4 px-8 min-h-[82px] bg-white hover:bg-[#FAF8F6] active:bg-[#F3EDE8] active:scale-[0.985] border-2 border-[#141413]/10 hover:border-[#bb302a] rounded-[28px] shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_12px_28px_rgba(0,0,0,0.06)] transition-all group text-left touch-manipulation select-none"
-          >
-            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#bb302a]/10 text-[#bb302a] flex items-center justify-center flex-shrink-0 group-hover:scale-105 group-active:scale-95 transition-transform shadow-inner">
-              <CreditCard className="w-7 h-7" />
-            </div>
-            <div>
-              <div className="text-sm sm:text-base lg:text-lg font-extrabold text-[#141413] flex items-center gap-2.5">
-                <span>Quét Căn cước công dân gắn chíp</span>
-                <span className="px-2.5 py-0.5 text-[11px] bg-[#bb302a]/10 text-[#bb302a] rounded-full font-bold tracking-wider">
-                  TỰ ĐỘNG
-                </span>
-              </div>
-              <div className="text-xs sm:text-sm text-[#555555] mt-0.5">
-                Đặt thẻ CCCD vào đầu đọc hoặc mặt kính cảm ứng để nhận diện chính xác 100%
-              </div>
-            </div>
-          </button>
-
-          {/* Scan QR Online Booking (Touchscreen Ergonomic Grand Button) */}
-          <button
-            onClick={() => setIsQrOpen(true)}
-            className="flex items-center justify-center gap-5 py-3.5 sm:py-4 px-8 min-h-[82px] bg-white hover:bg-[#FAF8F6] active:bg-[#F3EDE8] active:scale-[0.985] border-2 border-[#141413]/10 hover:border-[#F79E1B] rounded-[28px] shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_12px_28px_rgba(0,0,0,0.06)] transition-all group text-left touch-manipulation select-none"
-          >
-            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#F79E1B]/15 text-[#9A3A0A] flex items-center justify-center flex-shrink-0 group-hover:scale-105 group-active:scale-95 transition-transform shadow-inner">
-              <QrCode className="w-7 h-7" />
-            </div>
-            <div>
-              <div className="text-sm sm:text-base lg:text-lg font-extrabold text-[#141413] flex items-center gap-2.5">
-                <span>Check-in Lịch hẹn Zalo / Trực tuyến</span>
-                <span className="px-2.5 py-0.5 text-[11px] bg-[#F79E1B]/20 text-[#9A3A0A] rounded-full font-bold tracking-wider">
-                  ƯU TIÊN
-                </span>
-              </div>
-              <div className="text-xs sm:text-sm text-[#555555] mt-0.5">
-                Đưa mã QR trên Zalo Mini App hoặc Cổng DVC trước camera để quét lịch hẹn
-              </div>
-            </div>
-          </button>
+      {/* ========================================================================= */}
+      {/* 3. FOOTER - CHUẨN THÔNG TIN BẢN QUYỀN VÀ HOTLINE HỖ TRỢ                   */}
+      {/* ========================================================================= */}
+      <footer className="bg-white border-t border-[#141413]/10 px-8 py-2.5 flex items-center justify-between text-xs text-[#696969] font-medium flex-shrink-0 z-20">
+        <div className="flex items-center gap-4">
+          <span className="font-bold text-[#bb302a] uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#059669] animate-pulse" />
+            <span>Hệ thống Hoạt động Ổn định</span>
+          </span>
+          <span>•</span>
+          <span>Trung tâm Phục vụ Hành chính công Xã Nghĩa Hưng - Huyện Nghĩa Hưng - Tỉnh Nam Định</span>
         </div>
 
-        {/* Administrative footer reassurance note */}
-        <div className="mt-2 text-center text-xs text-[#696969] flex items-center justify-center gap-2 font-medium">
-          <ShieldCheck className="w-4 h-4 text-[#bb302a]" />
-          <span>Hệ thống lấy số tự động chuẩn Quốc gia • Bảo vệ quyền lợi và bảo mật thông tin công dân</span>
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2 text-[#141413]">
+            <Phone className="w-3.5 h-3.5 text-[#bb302a]" />
+            <span className="font-bold">Hotline tiếp nhận: 0228 385 1234</span>
+          </div>
+          <span>•</span>
+          <span className="font-mono text-[#696969]">Kiosk v2.4 (1920x1080@100%)</span>
         </div>
       </footer>
 
-      {/* Modals */}
+      {/* ========================================================================= */}
+      {/* 4. MODALS (CCCD, QR HẸN, THÔNG TIN HỖ TRỢ, PHIẾU LẤY SỐ KHÔNG RĂNG CƯA)   */}
+      {/* ========================================================================= */}
       <CccdScanModal
         isOpen={isCccdOpen}
         onClose={() => setIsCccdOpen(false)}
-        onScanSuccess={handleCccdScanSuccess}
+        onScanSuccess={(citizen) => {
+          setIsCccdOpen(false);
+          const t = issueTicket('cat-a', { ...citizen, isPriority: isPriorityMode });
+          playDingDongChime();
+          setCurrentIssuedTicket(t);
+        }}
       />
 
       <QrAppointmentModal
         isOpen={isQrOpen}
         onClose={() => setIsQrOpen(false)}
-        onCheckInSuccess={handleQrCheckInSuccess}
+        onCheckInSuccess={(citizen, categoryId) => {
+          setIsQrOpen(false);
+          const t = issueTicket(categoryId, {
+            ...citizen,
+            isPriority: true,
+          });
+          playDingDongChime();
+          setCurrentIssuedTicket(t);
+        }}
+      />
+
+      <SupportInfoModal
+        type={supportType}
+        onClose={() => setSupportType(null)}
       />
 
       <TicketReceiptModal
         ticket={currentIssuedTicket}
-        onClose={() => setCurrentIssuedTicket(null)}
+        onClose={() => {
+          setCurrentIssuedTicket(null);
+          // Auto return to home screen if was in sub-screen
+          if (currentScreen !== 'HOME') {
+            setCurrentScreen('HOME');
+          }
+        }}
       />
     </div>
   );

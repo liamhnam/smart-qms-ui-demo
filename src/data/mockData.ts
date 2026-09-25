@@ -41,6 +41,26 @@ export const INITIAL_STAFF: Staff[] = [
     ratingAverage: 4.7,
     ratingCount: 82,
   },
+  {
+    id: 'staff-05',
+    fullName: 'Hoàng Thị Mỹ Linh',
+    title: 'Chuyên viên Lao động - TBXH',
+    employeeCode: 'NV-1065',
+    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80',
+    department: 'Bộ phận Chính sách Xã hội',
+    ratingAverage: 4.85,
+    ratingCount: 110,
+  },
+  {
+    id: 'staff-06',
+    fullName: 'Đặng Quốc Huy',
+    title: 'Chuyên viên Thuế & Tài chính',
+    employeeCode: 'NV-1077',
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
+    department: 'Bộ phận Tài chính - Thuế',
+    ratingAverage: 4.9,
+    ratingCount: 142,
+  },
 ];
 
 export const INITIAL_CATEGORIES: Category[] = [
@@ -138,6 +158,28 @@ export const INITIAL_COUNTERS: Counter[] = [
     currentTicketId: 'ticket-401',
     todayServedCount: 45,
     avgServeMinutes: 4.8,
+  },
+  {
+    id: 'counter-05',
+    code: '05',
+    title: 'Quầy 05 - Lao động & Chính sách Xã hội',
+    assignedStaff: INITIAL_STAFF[4],
+    status: 'ACTIVE',
+    categoryIds: ['cat-b', 'cat-d'],
+    currentTicketId: undefined,
+    todayServedCount: 18,
+    avgServeMinutes: 7.5,
+  },
+  {
+    id: 'counter-06',
+    code: '06',
+    title: 'Quầy 06 - Tài chính & Thuế lệ phí',
+    assignedStaff: INITIAL_STAFF[5],
+    status: 'ACTIVE',
+    categoryIds: ['cat-c'],
+    currentTicketId: undefined,
+    todayServedCount: 22,
+    avgServeMinutes: 8.2,
   },
 ];
 
