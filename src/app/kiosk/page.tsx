@@ -16,7 +16,7 @@ import {
   HeartHandshake,
   Clock,
   Users,
-  ChevronRight,
+  ArrowRight,
   ShieldCheck,
   Sparkles,
 } from 'lucide-react';
@@ -41,14 +41,14 @@ export default function KioskPage() {
   const getCategoryIcon = (iconName: string) => {
     switch (iconName) {
       case 'Building2':
-        return <Building2 className="w-8 h-8 sm:w-10 sm:h-10 text-white" />;
+        return <Building2 className="w-8 h-8 text-[#141413]" />;
       case 'Scale':
-        return <Scale className="w-8 h-8 sm:w-10 sm:h-10 text-white" />;
+        return <Scale className="w-8 h-8 text-[#141413]" />;
       case 'Briefcase':
-        return <Briefcase className="w-8 h-8 sm:w-10 sm:h-10 text-white" />;
+        return <Briefcase className="w-8 h-8 text-[#141413]" />;
       case 'Zap':
       default:
-        return <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-white" />;
+        return <Zap className="w-8 h-8 text-[#141413]" />;
     }
   };
 
@@ -73,7 +73,6 @@ export default function KioskPage() {
   };
 
   const handleCccdScanSuccess = (citizen: CitizenInfo) => {
-    // Pick first category or prompt
     const targetCat = categories[0];
     const newTicket = issueTicket(targetCat.id, {
       ...citizen,
@@ -88,178 +87,190 @@ export default function KioskPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-slate-100 flex flex-col justify-between pt-16 sm:pt-20 pb-8 px-4 sm:px-8 select-none">
-      {/* Top Kiosk Header */}
-      <header className="max-w-6xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-4 py-4 px-6 bg-slate-900/60 backdrop-blur-xl rounded-3xl border border-slate-800 shadow-xl">
+    <div className="min-h-screen bg-[#F3F0EE] text-[#141413] flex flex-col justify-between pt-16 sm:pt-20 pb-8 px-4 sm:px-8 select-none relative overflow-hidden">
+      {/* Ghost Watermark Headline (Cream-on-cream typography) */}
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 text-[100px] sm:text-[140px] font-bold text-[#E8E2DA] select-none pointer-events-none whitespace-nowrap opacity-60 z-0">
+        HÀNH CHÍNH CÔNG
+      </div>
+
+      {/* Top Kiosk Header (40px Stadium shape on #FCFBFA) */}
+      <header className="relative z-10 max-w-5xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-4 py-5 px-8 bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)]">
         <div className="flex items-center gap-4 text-center md:text-left">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-red-600 via-amber-500 to-yellow-400 p-0.5 shadow-lg flex items-center justify-center">
-            <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center font-black text-amber-400 text-xl tracking-wider">
-              ★
-            </div>
+          {/* Dual-Circle Administrative Mark (#bb302a + #F79E1B) */}
+          <div className="relative flex items-center h-12">
+            <div className="w-10 h-10 rounded-full bg-[#bb302a] opacity-95 shadow-sm" />
+            <div className="w-10 h-10 rounded-full bg-[#F79E1B] opacity-90 -ml-5 mix-blend-multiply" />
           </div>
           <div>
-            <span className="text-[11px] font-bold text-amber-400 uppercase tracking-widest block">
-              Ủy ban Nhân dân • Bộ phận Tiếp nhận & Trả kết quả
+            <span className="eyebrow-label text-[#bb302a] block">
+              • BỘ PHẬN TIẾP NHẬN & TRẢ KẾT QUẢ MỘT CỬA
             </span>
-            <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-              TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG
+            <h1 className="text-xl sm:text-2xl font-medium text-[#141413] tracking-tight">
+              Trung tâm Phục vụ Hành chính công
             </h1>
-            <p className="text-xs text-slate-400">
-              Hệ thống Kiosk Lấy số tự động & Quản lý Xếp hàng Thông minh
+            <p className="text-xs text-[#696969] mt-0.5">
+              Hệ thống Kiosk cấp số tự động theo chuẩn thủ tục hành chính
             </p>
           </div>
         </div>
 
-        {/* Live Clock & Date */}
-        <div className="flex items-center gap-6 text-right">
-          <div className="hidden sm:block">
-            <div className="text-2xl font-black tracking-wider font-mono text-cyan-400">
+        {/* Live Clock & Priority Toggle */}
+        <div className="flex items-center gap-5">
+          <div className="text-right hidden sm:block">
+            <div className="text-xl font-medium font-mono text-[#141413] tracking-tight">
               {currentTime
                 ? currentTime.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
                 : '--:--:--'}
             </div>
-            <div className="text-xs text-slate-400">
+            <div className="text-[11px] text-[#696969]">
               {currentTime
                 ? currentTime.toLocaleDateString('vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' })
                 : ''}
             </div>
           </div>
 
-          {/* Priority Mode Toggle Button */}
+          {/* Priority Pill Button (20px radius) */}
           <button
             onClick={() => setIsPriorityMode(!isPriorityMode)}
-            className={`px-4 py-2.5 rounded-2xl border text-xs font-bold transition-all flex items-center gap-2 shadow-md ${
+            className={`px-4 py-2.5 rounded-[20px] text-xs font-medium transition-all flex items-center gap-2 ${
               isPriorityMode
-                ? 'bg-amber-500/20 text-amber-300 border-amber-400/60 ring-2 ring-amber-400/30'
-                : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600'
+                ? 'bg-[#bb302a] text-white shadow-sm'
+                : 'bg-white border-[1.5px] border-[#141413] text-[#141413] hover:bg-[#F3F0EE]'
             }`}
           >
-            <HeartHandshake className="w-4 h-4 text-amber-400" />
-            <span>{isPriorityMode ? 'Chế độ ƯU TIÊN: ĐANG BẬT' : 'Khách hàng Ưu tiên?'}</span>
+            <HeartHandshake className="w-4 h-4" />
+            <span>{isPriorityMode ? 'Chế độ Ưu tiên: BẬT' : 'Khách hàng Ưu tiên?'}</span>
           </button>
         </div>
       </header>
 
-      {/* Main Kiosk Content - Service Selection Grid */}
-      <main className="max-w-6xl mx-auto w-full my-6 flex-1 flex flex-col justify-center">
+      {/* Main Kiosk Content - Circular Portraits with Satellite Arrow CTAs */}
+      <main className="relative z-10 max-w-5xl mx-auto w-full my-6 flex-1 flex flex-col justify-center">
         <div className="text-center mb-6">
-          <span className="px-3 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full text-xs font-semibold uppercase tracking-wider inline-flex items-center gap-1.5 mb-2">
-            <Sparkles className="w-3.5 h-3.5" />
-            Bước 1: Chạm vào màn hình để chọn lĩnh vực cần phục vụ
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            QUÝ KHÁCH CẦN THỰC HIỆN THỦ TỤC NÀO?
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-[#141413]/10 text-xs text-[#696969] font-medium mb-2 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#bb302a]" />
+            <span>Chạm trực tiếp vào lĩnh vực để nhận số thứ tự</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-medium text-[#141413] tracking-tight">
+            Quý công dân cần giải quyết thủ tục nào?
           </h2>
         </div>
 
-        {/* 4 Large Interactive Touch Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+        {/* 4 Service Cards with Circular Portraits & Docked Satellite Micro-CTAs */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {categories.map((cat) => (
             <div
               key={cat.id}
               onClick={() => handleSelectCategory(cat)}
-              className="group relative cursor-pointer overflow-hidden rounded-3xl bg-slate-900/80 hover:bg-slate-800/90 border border-slate-800 hover:border-blue-500/50 p-6 sm:p-7 shadow-xl hover:shadow-2xl hover:shadow-blue-500/15 transition-all duration-300 transform hover:-translate-y-1 active:scale-[0.98] flex flex-col justify-between"
+              className="group relative cursor-pointer bg-[#FCFBFA] hover:bg-white rounded-[40px] p-6 sm:p-7 border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_24px_48px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between"
             >
-              {/* Top Accent Gradient Bar */}
-              <div className={`absolute top-0 left-0 right-0 h-2 bg-gradient-to-r ${cat.color}`} />
-
-              <div>
-                <div className="flex items-start justify-between gap-4 mb-4">
-                  <div
-                    className={`w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-gradient-to-tr ${cat.color} flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform`}
-                  >
+              <div className="flex items-start gap-5">
+                {/* Circular Portrait with Satellite Micro-CTA */}
+                <div className="relative flex-shrink-0">
+                  {/* Circular Orbit / Mask */}
+                  <div className="w-20 h-20 rounded-full bg-[#F3F0EE] border border-[#141413]/10 flex items-center justify-center group-hover:scale-105 transition-transform">
                     {getCategoryIcon(cat.iconName)}
                   </div>
-                  <span className="text-2xl font-black font-mono text-slate-400 group-hover:text-blue-400">
-                    MÃ {cat.prefix}
-                  </span>
+
+                  {/* Satellite Circular Micro-CTA docked at bottom-right */}
+                  <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-white border border-[#141413]/15 shadow-sm flex items-center justify-center text-[#141413] group-hover:bg-[#141413] group-hover:text-white transition-all">
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-blue-300 transition-colors">
-                  {cat.name}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed line-clamp-2">
-                  {cat.description}
-                </p>
+                {/* Service Details */}
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="eyebrow-label text-[#bb302a]">
+                      • LĨNH VỰC {cat.prefix}
+                    </span>
+                    <span className="text-xs font-mono font-bold text-[#696969] bg-[#F3F0EE] px-2.5 py-0.5 rounded-full">
+                      Số hiện tại: {cat.prefix}-{String(cat.currentNumber).padStart(3, '0')}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg sm:text-xl font-medium text-[#141413] mt-1 group-hover:text-[#bb302a] transition-colors">
+                    {cat.name}
+                  </h3>
+                  <p className="text-xs text-[#696969] mt-1 leading-relaxed line-clamp-2">
+                    {cat.description}
+                  </p>
+                </div>
               </div>
 
-              {/* Waiting Stats & CTA */}
-              <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs">
-                <div className="flex items-center gap-4 text-slate-400">
+              {/* Waiting Status Bar */}
+              <div className="mt-5 pt-4 border-t border-[#141413]/10 flex items-center justify-between text-xs text-[#696969]">
+                <div className="flex items-center gap-4">
                   <div className="flex items-center gap-1.5">
-                    <Users className="w-4 h-4 text-amber-400" />
-                    <span>
-                      Đang đợi: <strong className="text-white">{cat.waitingCount}</strong> người
-                    </span>
+                    <Users className="w-3.5 h-3.5 text-[#bb302a]" />
+                    <span>Đang chờ: <strong className="text-[#141413] font-medium">{cat.waitingCount} người</strong></span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Clock className="w-4 h-4 text-emerald-400" />
-                    <span>
-                      Dự kiến: <strong className="text-white">~{cat.waitingCount * cat.averageWaitMinutes}</strong> phút
-                    </span>
+                    <Clock className="w-3.5 h-3.5 text-[#bb302a]" />
+                    <span>Dự kiến: <strong className="text-[#141413] font-medium">~{cat.waitingCount * cat.averageWaitMinutes} phút</strong></span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1 text-blue-400 font-bold group-hover:translate-x-1 transition-transform">
-                  <span>Chạm để lấy số</span>
-                  <ChevronRight className="w-4 h-4" />
-                </div>
+                <span className="text-xs font-medium text-[#141413] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                  Lấy số ngay
+                  <ArrowRight className="w-3.5 h-3.5 text-[#bb302a]" />
+                </span>
               </div>
             </div>
           ))}
         </div>
       </main>
 
-      {/* Alternative Fast Entry Options (CCCD / QR) */}
-      <footer className="max-w-6xl mx-auto w-full">
+      {/* Alternative Entry Options (CCCD Chip & Online QR Check-in) */}
+      <footer className="relative z-10 max-w-5xl mx-auto w-full">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Scan CCCD Button */}
+          {/* Scan CCCD Chip Card */}
           <button
             onClick={() => setIsCccdOpen(true)}
-            className="flex items-center justify-center gap-3 py-4 px-6 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-cyan-500/60 rounded-2xl shadow-lg transition-all group"
+            className="flex items-center justify-center gap-4 py-4 px-6 bg-white hover:bg-[#FCFBFA] border border-[#141413]/10 rounded-[40px] shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_12px_32px_rgba(0,0,0,0.06)] transition-all group text-left"
           >
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
-              <CreditCard className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-full bg-[#bb302a]/10 text-[#bb302a] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+              <CreditCard className="w-6 h-6" />
             </div>
-            <div className="text-left">
-              <div className="text-xs font-bold text-white flex items-center gap-2">
-                <span>Quét Căn cước công dân gắn chíp</span>
-                <span className="px-1.5 py-0.5 text-[9px] bg-cyan-500/20 text-cyan-300 rounded font-semibold">
-                  Tự động điền
+            <div>
+              <div className="text-xs font-bold text-[#141413] flex items-center gap-2">
+                <span>Quét thẻ Căn cước công dân gắn chíp</span>
+                <span className="px-2 py-0.5 text-[9px] bg-[#bb302a]/10 text-[#bb302a] rounded-full font-bold">
+                  TỰ ĐỘNG
                 </span>
               </div>
-              <div className="text-[11px] text-slate-400">
-                Nhận vé định danh chính xác, không cần nhập thông tin
+              <div className="text-[11px] text-[#696969] mt-0.5">
+                Đọc thông tin từ chíp điện tử, xác thực chính xác không cần gõ phím
               </div>
             </div>
           </button>
 
-          {/* Scan QR Online Booking Button */}
+          {/* Scan QR Online Booking */}
           <button
             onClick={() => setIsQrOpen(true)}
-            className="flex items-center justify-center gap-3 py-4 px-6 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-emerald-500/60 rounded-2xl shadow-lg transition-all group"
+            className="flex items-center justify-center gap-4 py-4 px-6 bg-white hover:bg-[#FCFBFA] border border-[#141413]/10 rounded-[40px] shadow-[0px_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0px_12px_32px_rgba(0,0,0,0.06)] transition-all group text-left"
           >
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
-              <QrCode className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-full bg-[#F79E1B]/15 text-[#9A3A0A] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+              <QrCode className="w-6 h-6" />
             </div>
-            <div className="text-left">
-              <div className="text-xs font-bold text-white flex items-center gap-2">
-                <span>Check-in Đặt lịch hẹn Zalo / Online</span>
-                <span className="px-1.5 py-0.5 text-[9px] bg-emerald-500/20 text-emerald-300 rounded font-semibold">
-                  Ưu tiên gọi trước
+            <div>
+              <div className="text-xs font-bold text-[#141413] flex items-center gap-2">
+                <span>Check-in Lịch hẹn Zalo / Trực tuyến</span>
+                <span className="px-2 py-0.5 text-[9px] bg-[#F79E1B]/20 text-[#9A3A0A] rounded-full font-bold">
+                  ƯU TIÊN
                 </span>
               </div>
-              <div className="text-[11px] text-slate-400">
-                Quét mã QR từ Zalo Mini App để nhận số hẹn trước
+              <div className="text-[11px] text-[#696969] mt-0.5">
+                Quét mã QR từ Zalo Mini App để nhận số theo giờ hẹn trước
               </div>
             </div>
           </button>
         </div>
 
-        {/* Security & System Info Footer */}
-        <div className="mt-4 text-center text-[11px] text-slate-500 flex items-center justify-center gap-2">
-          <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-          <span>Hệ thống lấy số tự động GoodM Smart QMS • Tự động đồng bộ thời gian thực</span>
+        {/* Administrative footer note */}
+        <div className="mt-4 text-center text-[11px] text-[#696969] flex items-center justify-center gap-2">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#bb302a]" />
+          <span>Hệ thống lấy số điện tử chuẩn Hành chính công • Chuẩn bảo mật thông tin công dân</span>
         </div>
       </footer>
 

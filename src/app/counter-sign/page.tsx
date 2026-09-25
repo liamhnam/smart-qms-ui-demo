@@ -26,119 +26,130 @@ export default function CounterSignPage() {
   );
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between pt-16 sm:pt-20 pb-8 px-4 sm:px-8 select-none">
-      {/* Top Banner Header */}
-      <header className="max-w-5xl mx-auto w-full flex items-center justify-between py-4 px-6 bg-slate-900/80 rounded-3xl border border-slate-800 shadow-xl">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-red-600 to-amber-500 flex items-center justify-center font-bold text-white text-xl shadow-lg">
-            ★
+    <div className="min-h-screen bg-[#F3F0EE] text-[#141413] flex flex-col justify-between pt-16 sm:pt-20 pb-8 px-4 sm:px-8 select-none relative overflow-hidden">
+      {/* Ghost Watermark Headline */}
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 text-[120px] font-bold text-[#E8E2DA] select-none pointer-events-none whitespace-nowrap opacity-60 z-0">
+        BẢNG ĐIỆN TỬ
+      </div>
+
+      {/* Top Banner Header (Stadium 40px on #FCFBFA) */}
+      <header className="relative z-10 max-w-5xl mx-auto w-full flex items-center justify-between py-4 px-8 bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.03)]">
+        <div className="flex items-center gap-4">
+          {/* Dual-Circle Administrative Mark (#bb302a + #F79E1B) */}
+          <div className="relative flex items-center h-10">
+            <div className="w-8 h-8 rounded-full bg-[#bb302a] opacity-95 shadow-sm" />
+            <div className="w-8 h-8 rounded-full bg-[#F79E1B] opacity-90 -ml-4 mix-blend-multiply" />
           </div>
           <div>
-            <span className="text-[11px] text-amber-400 font-bold uppercase tracking-widest block">
-              BẢNG THÔNG TIN ĐIỆN TỬ TẠI QUẦY
+            <span className="eyebrow-label text-[#bb302a] block">
+              • BẢNG THÔNG TIN ĐIỆN TỬ TẠI QUẦY
             </span>
-            <h1 className="text-lg sm:text-xl font-black text-white tracking-wide">
-              TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG
+            <h1 className="text-lg sm:text-xl font-medium text-[#141413] tracking-tight">
+              Trung tâm Phục vụ Hành chính công
             </h1>
           </div>
         </div>
 
         {/* Counter Switcher & Clock */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-5">
           <div className="relative">
             <select
               value={activeCounterId}
               onChange={(e) => setActiveCounterId(e.target.value)}
-              className="bg-slate-800 text-cyan-300 font-bold text-xs sm:text-sm px-3 py-1.5 rounded-xl border border-slate-700 cursor-pointer appearance-none pr-7 focus:outline-none"
+              className="bg-white text-[#141413] font-medium text-xs sm:text-sm px-3.5 py-1.5 rounded-full border border-[#141413]/15 cursor-pointer appearance-none pr-8 focus:outline-none shadow-sm"
             >
               {counters.map((c) => (
-                <option key={c.id} value={c.id} className="bg-slate-900 text-white">
+                <option key={c.id} value={c.id} className="bg-[#FCFBFA] text-[#141413]">
                   Xem {c.title}
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-cyan-400 absolute right-2 top-2.5 pointer-events-none" />
+            <ChevronDown className="w-3.5 h-3.5 text-[#696969] absolute right-2.5 top-2.5 pointer-events-none" />
           </div>
 
           <div className="text-right hidden sm:block">
-            <div className="text-lg font-black font-mono text-cyan-400">
+            <div className="text-lg font-medium font-mono text-[#141413]">
               {currentTime
                 ? currentTime.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
                 : '--:--'}
             </div>
-            <div className="text-[10px] text-slate-400">Thời gian thực</div>
+            <div className="text-[10px] text-[#696969]">Giờ tiếp nhận</div>
           </div>
         </div>
       </header>
 
-      {/* Main Counter Sign Board */}
-      <main className="max-w-5xl mx-auto w-full my-6 flex-1 flex flex-col justify-center">
-        <div className="bg-gradient-to-br from-slate-900/90 via-slate-900 to-indigo-950/80 rounded-3xl border border-slate-800 p-8 sm:p-10 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Left: Officer Profile */}
+      {/* Main Counter Sign Board (Stadium 40px on #FCFBFA) */}
+      <main className="relative z-10 max-w-5xl mx-auto w-full my-6 flex-1 flex flex-col justify-center">
+        <div className="bg-[#FCFBFA] rounded-[40px] border border-[#141413]/10 p-8 sm:p-12 shadow-[0px_24px_48px_rgba(0,0,0,0.06)] relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-10">
+          {/* Left: Officer Profile with Circular Portrait & Satellite Badge */}
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left space-y-4">
-            <div className="inline-block px-4 py-1.5 bg-blue-600 text-white text-xs sm:text-sm font-black rounded-2xl shadow-lg uppercase tracking-wider">
+            <div className="inline-block px-4 py-1.5 bg-[#bb302a] text-white text-xs sm:text-sm font-medium rounded-full shadow-sm uppercase tracking-wider">
               {counter.title}
             </div>
 
-            <div className="flex items-center gap-5">
-              <div className="relative">
+            <div className="flex items-center gap-6">
+              {/* Circular portrait with satellite verified badge */}
+              <div className="relative flex-shrink-0">
                 <img
                   src={counter.assignedStaff.avatarUrl}
                   alt={counter.assignedStaff.fullName}
-                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl object-cover border-2 border-blue-500 shadow-xl"
+                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-white shadow-md"
                 />
-                <div className="absolute -bottom-2 -right-2 p-1.5 bg-emerald-500 text-white rounded-full shadow-md">
-                  <UserCheck className="w-4 h-4" />
+                {/* Satellite CTA / Badge docked onto perimeter */}
+                <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-white border border-[#141413]/15 shadow-sm flex items-center justify-center text-[#bb302a]">
+                  <UserCheck className="w-5 h-5" />
                 </div>
               </div>
 
               <div>
-                <span className="text-xs text-slate-400 block mb-0.5">Cán bộ tiếp nhận & thụ lý:</span>
-                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <span className="eyebrow-label text-[#696969] block mb-1">
+                  • CÁN BỘ TIẾP NHẬN & THỤ LÝ
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-medium text-[#141413] tracking-tight">
                   {counter.assignedStaff.fullName}
                 </h2>
-                <p className="text-xs text-blue-300 font-medium mt-0.5">
+                <p className="text-xs text-[#555555] font-medium mt-0.5">
                   {counter.assignedStaff.title}
                 </p>
                 <div className="flex items-center gap-2 mt-2">
-                  <div className="flex items-center text-amber-400 text-xs font-bold">
-                    <Star className="w-4 h-4 fill-amber-400 mr-1" />
-                    <span>{counter.assignedStaff.ratingAverage}</span>
+                  <div className="flex items-center text-[#F79E1B] text-xs font-bold">
+                    <Star className="w-4 h-4 fill-[#F79E1B] mr-1" />
+                    <span className="text-[#141413]">{counter.assignedStaff.ratingAverage}</span>
                   </div>
-                  <span className="text-xs text-slate-500">
-                    ({counter.assignedStaff.ratingCount} lượt đánh giá)
+                  <span className="text-xs text-[#696969]">
+                    ({counter.assignedStaff.ratingCount} lượt đánh giá hài lòng)
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-2 text-xs text-slate-400 border-t border-slate-800/80 w-full">
-              Bộ phận: <strong className="text-slate-300">{counter.assignedStaff.department}</strong>
+            <div className="pt-2 text-xs text-[#696969] border-t border-[#141413]/10 w-full">
+              Bộ phận: <strong className="text-[#141413] font-medium">{counter.assignedStaff.department}</strong>
             </div>
           </div>
 
-          {/* Right: Giant Serving Number Display */}
-          <div className="w-full md:w-80 bg-slate-950/80 rounded-3xl border border-slate-800/90 p-6 sm:p-8 text-center shadow-inner flex flex-col justify-center items-center">
-            <span className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">
-              SỐ THỨ TỰ ĐANG PHỤC VỤ
+          {/* Right: Giant Serving Number Display (White Box with 32px corners) */}
+          <div className="w-full md:w-88 bg-white rounded-[32px] border border-[#141413]/10 p-8 sm:p-10 text-center shadow-sm flex flex-col justify-center items-center">
+            <span className="eyebrow-label text-[#696969] block mb-2">
+              • SỐ THỨ TỰ ĐANG PHỤC VỤ
             </span>
 
             {servingTicket ? (
               <div>
-                <div className="text-6xl sm:text-7xl font-black font-mono text-amber-400 tracking-tight animate-in zoom-in-95">
+                <div className="text-6xl sm:text-7xl font-medium font-mono text-[#bb302a] tracking-tight animate-in zoom-in-95">
                   {servingTicket.ticketNumber}
                 </div>
-                <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                <div className="mt-3 inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-medium bg-[#bb302a]/10 text-[#bb302a]">
+                  <span className="w-2 h-2 rounded-full bg-[#bb302a] animate-ping" />
                   ĐANG PHỤC VỤ
                 </div>
               </div>
             ) : (
               <div>
-                <div className="text-6xl font-mono font-bold text-slate-700">
+                <div className="text-6xl font-mono font-medium text-[#696969]/40">
                   ----
                 </div>
-                <span className="mt-3 inline-block px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700">
+                <span className="mt-3 inline-block px-3.5 py-1 rounded-full text-xs font-medium bg-[#F3F0EE] text-[#696969]">
                   SẴN SÀNG ĐÓN TIẾP
                 </span>
               </div>
@@ -147,9 +158,9 @@ export default function CounterSignPage() {
         </div>
       </main>
 
-      {/* Footer motto */}
-      <footer className="max-w-5xl mx-auto w-full text-center text-xs text-slate-500 flex items-center justify-center gap-2">
-        <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+      {/* Footer Motto */}
+      <footer className="relative z-10 max-w-5xl mx-auto w-full text-center text-xs text-[#696969] flex items-center justify-center gap-2 font-medium">
+        <Sparkles className="w-3.5 h-3.5 text-[#F79E1B]" />
         <span>Phương châm: &quot;Công khai - Minh bạch - Tận tình - Nhanh chóng&quot;</span>
       </footer>
     </div>

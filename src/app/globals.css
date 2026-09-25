@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #020617;
-  --foreground: #f8fafc;
+  --background: #F3F0EE;
+  --foreground: #141413;
 }
 
 body {
@@ -12,6 +12,20 @@ body {
   background: var(--background);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Headings have -2% letter spacing */
+h1, h2, h3, .font-heading {
+  letter-spacing: -0.02em;
+}
+
+/* Eyebrows have +4% uppercase tracking */
+.eyebrow-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 @keyframes scan {

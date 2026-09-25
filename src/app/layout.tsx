@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'GoodM Smart QMS — Hệ thống Xếp hàng & Lấy số Thông minh (NextGen UI Demo)',
+  title: 'Hệ thống Quản lý Xếp hàng & Lấy số Thông minh — Smart QMS (Hành chính công)',
   description:
-    'Bộ Demo UI/UX Thế hệ mới cho Hệ thống Lấy số và Điều phối xếp hàng thông minh (Kiosk, Màn hình TV 7:3, Bàn gọi số Cán bộ, Tablet Đánh giá, Bảng điện tử, Dashboard Điều hành).',
+    'Giao diện Hệ thống Lấy số và Điều phối Xếp hàng Thông minh chuẩn Hành chính công, lấy cảm hứng thiết kế tối giản, biên độ cong lớn, tone màu ấm Putty Cream và Đỏ Hành chính #bb302a.',
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 text-slate-100`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F3F0EE] text-[#141413] selection:bg-[#bb302a]/15 selection:text-[#bb302a]`}>
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

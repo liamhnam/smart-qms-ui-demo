@@ -39,75 +39,78 @@ export default function CccdScanModal({ isOpen, onClose, onScanSuccess }: CccdSc
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in">
-      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 border border-slate-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#141413]/60 backdrop-blur-md animate-in fade-in">
+      <div className="relative w-full max-w-md bg-[#FCFBFA] rounded-[40px] shadow-[0px_24px_48px_rgba(0,0,0,0.12)] p-8 border border-[#141413]/10">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 rounded-full"
+          className="absolute top-6 right-6 p-2 text-[#696969] hover:text-[#141413] rounded-full"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="text-center mb-6">
-          <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-3">
-            <CreditCard className="w-7 h-7" />
+          <div className="w-16 h-16 bg-[#bb302a]/10 text-[#bb302a] rounded-full flex items-center justify-center mx-auto mb-3">
+            <CreditCard className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-bold text-slate-900">Quét Căn cước công dân gắn chíp</h3>
-          <p className="text-xs text-slate-500 mt-1">
-            Đặt thẻ CCCD vào khe đọc thẻ hoặc mặt kính cảm biến
+          <span className="eyebrow-label text-[#bb302a] block mb-1">
+            • ĐỊNH DANH ĐIỆN TỬ
+          </span>
+          <h3 className="text-xl font-medium text-[#141413]">Quét Căn cước công dân gắn chíp</h3>
+          <p className="text-xs text-[#696969] mt-1">
+            Đặt thẻ CCCD vào đầu đọc hoặc mặt kính cảm ứng
           </p>
         </div>
 
         {/* Scanner Simulation Window */}
-        <div className="relative h-48 bg-slate-900 rounded-2xl overflow-hidden flex flex-col items-center justify-center border-2 border-slate-700">
+        <div className="relative h-44 bg-[#141413] rounded-[24px] overflow-hidden flex flex-col items-center justify-center border border-[#141413]">
           {isScanning ? (
             <>
               {/* Laser line scanning animation */}
-              <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#22d3ee] animate-[scan_2s_ease-in-out_infinite]" />
-              <Scan className="w-12 h-12 text-cyan-400 animate-pulse mb-2" />
-              <span className="text-xs text-cyan-200 font-mono tracking-wide">
+              <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#bb302a] to-transparent shadow-[0_0_15px_#bb302a] animate-[scan_2s_ease-in-out_infinite]" />
+              <Scan className="w-12 h-12 text-[#F79E1B] animate-pulse mb-2" />
+              <span className="text-xs text-[#F3F0EE] font-mono tracking-wide">
                 Đang đọc chíp điện tử CCCD...
               </span>
             </>
           ) : scannedData ? (
             <div className="text-center p-4">
-              <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto mb-2" />
-              <span className="text-xs text-emerald-300 font-bold uppercase tracking-wider block">
+              <CheckCircle2 className="w-12 h-12 text-[#F79E1B] mx-auto mb-2" />
+              <span className="text-xs text-[#F3F0EE] font-medium tracking-wider block">
                 Đọc thẻ thành công!
               </span>
             </div>
           ) : (
-            <span className="text-xs text-slate-400">Chờ tín hiệu thẻ...</span>
+            <span className="text-xs text-[#696969]">Chờ tín hiệu thẻ...</span>
           )}
         </div>
 
         {/* Scanned Data Preview */}
         {scannedData && (
-          <div className="mt-4 p-3.5 bg-blue-50/70 border border-blue-100 rounded-2xl text-xs space-y-1.5 animate-in fade-in">
+          <div className="mt-5 p-4 bg-[#F3F0EE] border border-[#141413]/10 rounded-[20px] text-xs space-y-2 animate-in fade-in">
             <div className="flex justify-between">
-              <span className="text-slate-500">Họ và tên:</span>
-              <strong className="text-slate-900 font-bold">{scannedData.name}</strong>
+              <span className="text-[#696969]">Họ và tên:</span>
+              <strong className="text-[#141413] font-medium">{scannedData.name}</strong>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Số định danh (CCCD):</span>
-              <span className="font-mono text-slate-800">{scannedData.citizenId}</span>
+              <span className="text-[#696969]">Số định danh (CCCD):</span>
+              <span className="font-mono text-[#141413]">{scannedData.citizenId}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Năm sinh:</span>
-              <span className="text-slate-800">{scannedData.birthYear}</span>
+              <span className="text-[#696969]">Năm sinh:</span>
+              <span className="text-[#141413]">{scannedData.birthYear}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Nơi thường trú:</span>
-              <span className="text-slate-800 truncate max-w-[200px]">{scannedData.address}</span>
+              <span className="text-[#696969]">Nơi thường trú:</span>
+              <span className="text-[#141413] truncate max-w-[210px]">{scannedData.address}</span>
             </div>
           </div>
         )}
 
-        {/* Actions */}
+        {/* Actions (Pills 20px radius) */}
         <div className="mt-6 flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 py-3 border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl hover:bg-slate-50"
+            className="flex-1 py-3 bg-white border-[1.5px] border-[#141413] text-[#141413] text-xs font-medium rounded-[20px] hover:bg-[#F3F0EE] transition-all"
           >
             Hủy bỏ
           </button>
@@ -119,9 +122,9 @@ export default function CccdScanModal({ isOpen, onClose, onScanSuccess }: CccdSc
                 onClose();
               }
             }}
-            className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5"
+            className="flex-1 py-3 bg-[#141413] hover:bg-[#262627] disabled:opacity-40 text-[#F3F0EE] text-xs font-medium rounded-[20px] transition-all flex items-center justify-center gap-1.5 shadow-sm"
           >
-            <CheckCircle2 className="w-4 h-4" />
+            <CheckCircle2 className="w-4 h-4 text-[#F79E1B]" />
             <span>Xác nhận thông tin</span>
           </button>
         </div>
