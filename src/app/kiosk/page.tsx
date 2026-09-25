@@ -180,7 +180,7 @@ export default function KioskPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#141413] group-hover:text-[#bb302a] transition-colors leading-tight truncate">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#141413] group-hover:text-[#bb302a] transition-colors leading-snug">
                     {cat.name}
                   </h3>
                   <p className="text-xs sm:text-sm text-[#555555] mt-1.5 leading-relaxed line-clamp-2">

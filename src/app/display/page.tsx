@@ -133,7 +133,7 @@ export default function DisplayPage() {
                       <div className="px-3 py-1 rounded-full bg-[#bb302a] text-white font-bold text-xs tracking-wider shadow-sm uppercase">
                         QUẦY {counter.code}
                       </div>
-                      <h2 className="text-sm sm:text-base font-bold text-[#141413] truncate max-w-[180px]">
+                      <h2 className="text-sm sm:text-base font-bold text-[#141413] truncate max-w-[280px]">
                         {counter.title.split('-')[1]?.trim() || counter.title}
                       </h2>
                     </div>
