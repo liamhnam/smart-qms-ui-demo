@@ -5,6 +5,12 @@
 > Thiết kế chuẩn cho Trung tâm Phục vụ Hành chính công (Một cửa điện tử), Bệnh viện, Ngân hàng, và Trung tâm dịch vụ khách hàng.
 > **100% Client-side • Dữ liệu Mock thông minh • Không cần Backend • Tích hợp âm thanh gọi số thực qua Web Audio API**.
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000?style=for-the-badge&logo=vercel)](https://temporary-rushing-cove-tivkcjc.vercel.app)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fliamhnam%2Fsmart-qms-ui-demo)
+
+🌐 **Demo Trực tiếp:** [https://temporary-rushing-cove-tivkcjc.vercel.app](https://temporary-rushing-cove-tivkcjc.vercel.app)  
+📦 **GitHub Repository:** [https://github.com/liamhnam/smart-qms-ui-demo](https://github.com/liamhnam/smart-qms-ui-demo)
+
 ---
 
 ## 🌟 Tính năng nổi bật & Các màn hình trong Demo
